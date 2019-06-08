@@ -5,6 +5,7 @@ using UnityEngine;
 public class Person : MonoBehaviour {
 
     public float chopSpeed;
+    public float maxTargetDistance;
 
     private Commandable commandable;
     private ChoppableTree interactingTree;
@@ -17,6 +18,8 @@ public class Person : MonoBehaviour {
 
     private void OnGoalReached(Selectable destination) {
         if (destination == null)
+            return;
+        if (Vector2.Distance(this.transform.position, destination.transform.position) > this.maxTargetDistance)
             return;
         this.interactingTree = destination.GetComponent<ChoppableTree>();
         if (this.interactingTree)
