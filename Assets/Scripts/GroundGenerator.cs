@@ -6,11 +6,12 @@ public class GroundGenerator : MonoBehaviour {
 
     public Tilemap ground;
     public Transform decorations;
+    public Transform people;
     public GameObject person;
-    
+
     [Space] public int width;
     public int height;
-    
+
     [Space] public float perlinScale1;
     public float perlinScale2;
     public Tile grass;
@@ -19,13 +20,13 @@ public class GroundGenerator : MonoBehaviour {
     public Tile sand;
     public float waterHeight;
     public Tile water;
-    
+
     [Space] public float treePerlinScale1;
     public float treePerlinScale2;
     public float treeHeight;
     public int treeDensity;
     public GameObject tree;
-    
+
     [Space] public LayerMask personCollisionLayers;
     public int personSpawnTries;
     public int personSpawnRadius;
@@ -74,7 +75,7 @@ public class GroundGenerator : MonoBehaviour {
             var y = Random.Range(-this.personSpawnRadius, this.personSpawnRadius) + this.height / 2;
             var cell = this.ground.GetCellCenterWorld(new Vector3Int(x, y, 0));
             if (!Physics2D.OverlapCircle(cell, 0.5F, this.personCollisionLayers)) {
-                Instantiate(this.person, cell, Quaternion.identity);
+                Instantiate(this.person, cell, Quaternion.identity, this.people);
                 peopleSpawned++;
                 if (peopleSpawned >= this.personCount)
                     break;

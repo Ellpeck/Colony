@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SelectionManager : MonoBehaviour {
 
+    public static SelectionManager Instance { get; private set; }
+
     public LayerMask objectLayers;
     public List<Selectable> selectedObjects;
     public Selectable hoveringObject;
@@ -11,6 +13,7 @@ public class SelectionManager : MonoBehaviour {
     private new Camera camera;
 
     private void Start() {
+        Instance = this;
         this.camera = Camera.main;
     }
 

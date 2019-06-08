@@ -9,6 +9,8 @@ public class Commandable : MonoBehaviour {
 
     public float movementSpeed;
     public float maxWaypointDistance;
+    public OnTargetReached onTargetReached;
+    public OnCommandReceived onCommandReceived;
 
     private Selectable selectable;
     private Seeker seeker;
@@ -19,6 +21,7 @@ public class Commandable : MonoBehaviour {
     private Path currentPath;
     private int currentWaypoint;
     private bool facingLeft;
+    private Selectable destinationSelectable;
 
     private void Start() {
         this.selectable = this.GetComponent<Selectable>();
@@ -31,30 +34,41 @@ public class Commandable : MonoBehaviour {
     private void Update() {
         if (this.selectable.IsSelected && Input.GetMouseButtonDown(1)) {
             var pos = this.camera.ScreenToWorldPoint(Input.mousePosition);
+            this.destinationSelectable = SelectionManager.Instance.hoveringObject;
             this.seeker.StartPath(this.body.position, pos, this.OnPathCalculated);
+
+            if (this.onCommandReceived != null)
+                this.onCommandReceived(pos, this.destinationSelectable);
         }
     }
 
     private void FixedUpdate() {
         if (this.currentPath != null) {
-            Vector2 waypoint = this.currentPath.vectorPath[this.currentWaypoint];
-            var dir = (waypoint - this.body.position).normalized;
+            Vector2 waypoint;
+            while (true) {
+                var path = this.currentPath.vectorPath;
+                waypoint = path[this.currentWaypoint];
+                var dist = Vector2.Distance(this.body.position, waypoint);
+                if (dist <= this.maxWaypointDistance) {
+                    this.currentWaypoint++;
+                    if (this.currentWaypoint >= path.Count) {
+                        if (this.onTargetReached != null)
+                            this.onTargetReached(this.destinationSelectable);
+                        this.currentPath = null;
+                        return;
+                    }
+                } else {
+                    break;
+                }
+            }
 
+            var dir = (waypoint - this.body.position).normalized;
             if (this.facingLeft != dir.x < 0) {
                 this.transform.Rotate(0, 180, 0);
                 this.facingLeft = dir.x < 0;
             }
-
             this.body.velocity = dir * this.movementSpeed;
             this.animator.SetBool(Walking, true);
-
-            var dist = Vector2.Distance(this.body.position, waypoint);
-            if (dist <= this.maxWaypointDistance) {
-                this.currentWaypoint++;
-                if (this.currentWaypoint >= this.currentPath.vectorPath.Count) {
-                    this.currentPath = null;
-                }
-            }
         } else {
             this.body.velocity = Vector2.zero;
             this.animator.SetBool(Walking, false);
@@ -65,5 +79,9 @@ public class Commandable : MonoBehaviour {
         this.currentPath = path;
         this.currentWaypoint = 0;
     }
+
+    public delegate void OnTargetReached(Selectable destinationSelectable);
+
+    public delegate void OnCommandReceived(Vector2 destination, Selectable destinationSelectable);
 
 }

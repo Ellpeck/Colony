@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 3892446509048207009}
   - component: {fileID: 3892446509048207021}
   - component: {fileID: 3892446509048207023}
-  - component: {fileID: 3892446509048207020}
+  - component: {fileID: -3696622249838448240}
+  - component: {fileID: 6970151867861238035}
   m_Layer: 8
   m_Name: Person
   m_TagString: Untagged
@@ -117,7 +118,7 @@ MonoBehaviour:
   outline: {fileID: 3892446509568060690}
   selectedColor: {r: 0, g: 1, b: 0.10007763, a: 1}
   hoverColor: {r: 0, g: 1, b: 0.10196079, a: 0.44705883}
---- !u!114 &3892446509048207020
+--- !u!114 &-3696622249838448240
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,6 +132,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 1.5
   maxWaypointDistance: 0.5
+--- !u!114 &6970151867861238035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892446509048207013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d593d64f46ce747ba502e9c8c96964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chopSpeed: 1
 --- !u!1 &3892446509568060692
 GameObject:
   m_ObjectHideFlags: 0
