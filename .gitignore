@@ -5,6 +5,7 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 Assets/Plugins*
+Assets/AstarPathfindingProject*
 Logs/
 
 # Visual Studio cache directory

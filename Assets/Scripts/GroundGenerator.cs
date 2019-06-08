@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class GroundGenerator : MonoBehaviour {
@@ -26,10 +27,10 @@ public class GroundGenerator : MonoBehaviour {
 
     private void Start() {
         this.seed = Random.Range(0, 100000);
-        this.GenerateMap();
+        this.StartCoroutine(this.GenerateMap());
     }
 
-    private void GenerateMap() {
+    private IEnumerator GenerateMap() {
         Random.InitState(this.seed);
 
         for (var x = 0; x < this.width; x++) {
@@ -56,6 +57,9 @@ public class GroundGenerator : MonoBehaviour {
                 this.ground.SetTile(new Vector3Int(x, y, 0), tile);
             }
         }
+
+        yield return null; // tilemap collider updates in LateUpdate, so wait a frame
+        AstarPath.active.Scan();
     }
 
 }
