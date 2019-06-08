@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour {
         var posDelta = this.lastMousePos - mousePos;
         if (posDelta != Vector3.zero) {
             var worldDelta = this.camera.ScreenToWorldPoint(this.lastMousePos) - this.camera.ScreenToWorldPoint(mousePos);
-            if (Input.GetMouseButton(1) || Input.GetMouseButton(2)) {
+            if (Input.GetMouseButton(2)) {
                 this.camera.transform.position += worldDelta;
             }
 
