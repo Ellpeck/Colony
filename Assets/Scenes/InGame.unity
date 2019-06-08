@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAIIewQaFWCagIAABUFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMzg0jA4G4t5QQ0kNCJrSTiy+ytcYaZMkjyXwkw3+vVjbYIVNOYt/b1du3K38SoWwFmdNmaQR/1hzIzwG55zumMuDkx6AjPMGBbbRaiw84894FdwWSWOC8MSe0j0eYZnUJzojsXm0kkqd0SPE3vvNorUSuTbngG5hr66zHcyYteMhoh2WUD30OyAHLjW99/OhPoxn1pw9/iung5I8ZKAemo9IzcTKMp/Tudjxt+Q29VplkZQUcm+iyZnQ4bRPxGKjKt9iy6HBGEc+0lMK20og7VsGDdVWAATSBC+ZbDnLoECUXIDaFQzn97FWeW3CtWMOOD8J475qy5JduDC2Z3TYCd0zWeFFER5OgrKn6/I1wEwU4N7p8Ol8cUbzEFSLbvrFjxqzrOd0PP3Tao2DUnsktSyW8F6Be9NLoWnEPOlNjam1h9ND9vfQ2LyDbdvFG6lWwrr7P6zxW7OEU2j/MpSjTYOWkCaylDo7HSAbj5/PbCw67YtsSPooq/lr4wzb9pWqBR2Gs81DbpUJ5qa4NUskieIbd1G6ujQLTr1CBYtIdX30ddz3EK+z/WY8MH1J7e4ud38dVSgh3fEqvoFe9v0zLFnr/DLZY1U4KBZ3VCLx4o+ZaqWbH+i2d09a1yVnW17CpBf+6XCQfp5BDHEXpLONxPLqZpDHAaAwwTlM6nUYkbJ9QvlEmXxulrT9+bn1TlF81LIlfnMHSsCpsPDdsvxQfpbadfqFyvc4MgFp9LWHB+Fv88+QLLrxFa3BOqDBy8pkQqbMt8ORSKAm9Lg7OsKSrkpBK7LTDSELm4UuSkBM5/QNQSwMEFAAACAgAAAgh7FFFoqtsAAAAdwAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSs9BRUEovSizIKAYKGII4pZkpIHa0UppxUmpaqqWhYZJ5coqlpZGuSZJlaqqRcWqqcVKSgZmZoVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAACCHsEGhVgmoCAAAVBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAACCHsUUWiq2wAAAB3AAAACQAkAAAAAAAAAAAAAAC3AgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAG4DAAAAAA==
+    dataString: UEsDBBQAAAgIAAAIIezB+MIYawIAABQFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMzg0jA4G4t5QQ0kMSJqSTiy+ytcYaZMkjyeEjw3+vVjbYJVNOYt/b1du3K38RoWwFmdNmaQR/1hzIzwG5559MZcDJj0FHeII922i1Fkc48z4EdwWSWOC8MSe0j0eYZnUJzojsXm0kkqd0SPE3vvNorUSuTbngG5hr66zHcyYteMhoh2WUD30NyB7LjW99/OBPoxn1p6M/xXRw8scMlAPTUemZOBnGU3p3O562/IZeq0yysgKOTXRZMzqctol4DFTlW2xZdDijiGdaSmFbacQdquDBuirAAJrABfMtBzl0iJILEJvCoZx+9mueW3CtWMMOD8J475qy5JduDC2Z3TYCP5ms8aKIjiZBWVP1+RvhJgpwbnT5dL44oniJK0S2fWOHjFnXc7offui0R8GoHZNblkr4KEC96KXRteIedKbG1NrC6KH7e+ltXkC27eKN1KtgXX2f13ms2MMptL+fS1GmwcpJE1hLHRyPkQzGz+e3Fxx2xbYlfBRV/LHwzjb9pWqBR2Gs81DbpUJ5qa4NUskieIbd1G6ujQLTr1CBYtIdVr6Oux7iFfb/rEeGD6m9vcXO7+MqJYQ7PqVX0ErvLtOyhd49gy1eayeFgs5qBF68UXOtVLNj/ZbOaeva5Czra9jUgv+7XCQfp5BDHEXpLONxPLqZpDHAaAwwTlM6nUYkbJ9QvlEmV43S1h8/N9WJUn7TsCJ+cAZLw6qw8Nyw3VIcS207plC5XmcGQL02FS7KwfhL/OvkCy68Q2twTqgwcfKVEKmzLfDkUigJrS72zrCkq5KQSnxqh5GEzMOHJCEncvoLUEsDBBQAAAgIAAAIIexRRaKrbAAAAHcAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0rPQUVBKL0osyCgGChiCOKWZKSB2tFKacVJqWqqloWGSeXKKpaWRrkmSZWqqkXFqqnFSkoGZmaFSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAAgh7MH4whhrAgAAFAUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAAgh7FFFoqtsAAAAdwAAAAkAJAAAAAAAAAAAAAAAuAIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABvAwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -585,7 +585,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -609,7 +609,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.25, y: 21.32, z: -10}
+  m_LocalPosition: {x: 0, y: 25, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -704,7 +704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ground: {fileID: 215613327}
   decorations: {fileID: 495583409}
-  person: {fileID: 0}
+  person: {fileID: 3892446509048207013, guid: 6f09f14ee6e56cb44ac4e63e227b5f19, type: 3}
   width: 100
   height: 100
   perlinScale1: 5.16
@@ -724,6 +724,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1280
   personSpawnTries: 100
+  personSpawnRadius: 5
   personCount: 5
 --- !u!1 &1977510336
 GameObject:
@@ -771,5 +772,5 @@ MonoBehaviour:
   objectLayers:
     serializedVersion: 2
     m_Bits: 768
-  selectedObject: {fileID: 0}
+  selectedObjects: []
   hoveringObject: {fileID: 0}

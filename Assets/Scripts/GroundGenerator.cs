@@ -7,8 +7,10 @@ public class GroundGenerator : MonoBehaviour {
     public Tilemap ground;
     public Transform decorations;
     public GameObject person;
+    
     [Space] public int width;
     public int height;
+    
     [Space] public float perlinScale1;
     public float perlinScale2;
     public Tile grass;
@@ -17,11 +19,13 @@ public class GroundGenerator : MonoBehaviour {
     public Tile sand;
     public float waterHeight;
     public Tile water;
+    
     [Space] public float treePerlinScale1;
     public float treePerlinScale2;
     public float treeHeight;
     public int treeDensity;
     public GameObject tree;
+    
     [Space] public LayerMask personCollisionLayers;
     public int personSpawnTries;
     public int personSpawnRadius;
