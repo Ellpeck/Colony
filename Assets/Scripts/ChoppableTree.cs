@@ -6,10 +6,11 @@ public class ChoppableTree : MonoBehaviour {
 
     public int woodAmount;
 
-    public void Chop() {
+    public int Chop() {
         this.woodAmount--;
         if (this.woodAmount <= 0)
             Destroy(this.gameObject);
+        return 1;
     }
 
 }

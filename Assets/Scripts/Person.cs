@@ -32,7 +32,9 @@ public class Person : MonoBehaviour {
 
     private IEnumerator ChopWood() {
         while (this.interactingTree) {
-            this.interactingTree.Chop();
+            var chopped = this.interactingTree.Chop();
+            ResourceManager.Instance.wood.Add(chopped);
+
             yield return new WaitForSeconds(this.chopSpeed);
         }
     }
