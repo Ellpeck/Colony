@@ -57,9 +57,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8611685287279510216}
   - component: {fileID: 8611685287279510263}
-  - component: {fileID: -7056497964810999526}
   - component: {fileID: 5138844849102109888}
   - component: {fileID: -1848089515375723327}
+  - component: {fileID: 3518747099926375046}
   m_Layer: 9
   m_Name: Tree
   m_TagString: Untagged
@@ -133,32 +133,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &-7056497964810999526
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8611685287279510262}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.47530425}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.06382979}
-    oldSize: {x: 0.9375, y: 1.46875}
-    newSize: {x: 0.9375, y: 1.46875}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.41164792, y: 1.1381085}
-  m_EdgeRadius: 0
 --- !u!114 &5138844849102109888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +161,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   woodAmount: 50
+--- !u!70 &3518747099926375046
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8611685287279510262}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.59463775}
+  m_Size: {x: 0.542287, y: 1.3767755}
+  m_Direction: 0
 --- !u!1 &8985268922902886194
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,8 +8,10 @@ public class ResourceOverlay : MonoBehaviour {
     public TextMeshProUGUI[] texts;
 
     private void Update() {
-        for (var i = 0; i < this.texts.Length; i++)
-            this.texts[i].text = ResourceManager.Instance.Resources[i].ToString();
+        for (var i = 0; i < this.texts.Length; i++) {
+            var res = ResourceManager.Instance.Resources[i];
+            this.texts[i].text = res.amount.ToString();
+        }
     }
 
 }

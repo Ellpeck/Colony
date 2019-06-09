@@ -11,12 +11,21 @@ public class ResourceManager : MonoBehaviour {
     public Resource iron;
     public Resource gold;
     public Resource food;
-    
+
     public Resource[] Resources { get; private set; }
 
     private void Awake() {
         this.Resources = new[] {this.wood, this.stone, this.iron, this.gold, this.food};
         Instance = this;
+    }
+
+    public void Add(Resource.Type type, int amount) {
+        foreach (var res in this.Resources) {
+            if (res.type == type) {
+                res.amount += amount;
+                break;
+            }
+        }
     }
 
 }

@@ -6,24 +6,17 @@ using UnityEngine;
 [Serializable]
 public class Resource {
 
-    [SerializeField] private int amount;
+    public Type type;
+    public int amount;
 
-    public void Add(int amount) {
-        this.amount += amount;
-    }
+    public enum Type {
 
-    public int Consume(int amount) {
-        var consumed = Math.Min(this.amount, amount);
-        this.amount -= consumed;
-        return consumed;
-    }
+        Wood,
+        Stone,
+        Iron,
+        Gold,
+        Food
 
-    public int GetAmount() {
-        return this.amount;
-    }
-
-    public override string ToString() {
-        return this.amount.ToString();
     }
 
 }

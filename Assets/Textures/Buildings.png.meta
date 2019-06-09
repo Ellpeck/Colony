@@ -104,18 +104,18 @@ TextureImporter:
       name: Buildings_0
       rect:
         serializedVersion: 2
-        x: 40
-        y: 142
-        width: 78
-        height: 69
+        x: 0
+        y: 167
+        width: 118
+        height: 89
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9386c455aaf08c046bdeeed78f142124
+      spriteID: ec3c190bd509e384c9e9048895ab1ea0
       internalID: -8078966772632430244
       vertices: []
       indices: 

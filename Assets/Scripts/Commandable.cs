@@ -21,7 +21,7 @@ public class Commandable : MonoBehaviour {
     private Path currentPath;
     private int currentWaypoint;
     private bool facingLeft;
-    private Selectable destinationSelectable;
+    private GameObject destination;
 
     private void Start() {
         this.selectable = this.GetComponent<Selectable>();
@@ -33,13 +33,25 @@ public class Commandable : MonoBehaviour {
 
     private void Update() {
         if (this.selectable.IsSelected && Input.GetMouseButtonDown(1)) {
-            var pos = this.camera.ScreenToWorldPoint(Input.mousePosition);
-            this.destinationSelectable = SelectionManager.Instance.hoveringObject;
-            this.seeker.StartPath(this.body.position, pos, this.OnPathCalculated);
-
-            if (this.onCommandReceived != null)
-                this.onCommandReceived(pos, this.destinationSelectable);
+            var dest = SelectionManager.Instance.hoveringObject;
+            if (dest) {
+                this.MoveTo(dest.gameObject);
+            } else {
+                this.MoveTo(this.camera.ScreenToWorldPoint(Input.mousePosition));
+            }
         }
+    }
+
+    public void MoveTo(GameObject destination) {
+        this.MoveTo(destination.transform.position, destination);
+    }
+
+    public void MoveTo(Vector2 pos, GameObject destination = null) {
+        this.seeker.StartPath(this.body.position, pos, this.OnPathCalculated);
+
+        this.destination = destination;
+        if (this.onCommandReceived != null)
+            this.onCommandReceived(pos, destination);
     }
 
     private void FixedUpdate() {
@@ -53,7 +65,7 @@ public class Commandable : MonoBehaviour {
                     this.currentWaypoint++;
                     if (this.currentWaypoint >= path.Count) {
                         if (this.onTargetReached != null)
-                            this.onTargetReached(this.destinationSelectable);
+                            this.onTargetReached(this.destination);
                         this.currentPath = null;
                         return;
                     }
@@ -85,8 +97,8 @@ public class Commandable : MonoBehaviour {
         Gizmos.DrawWireSphere(this.transform.position, this.maxWaypointDistance);
     }
 
-    public delegate void OnTargetReached(Selectable destinationSelectable);
+    public delegate void OnTargetReached(GameObject destination);
 
-    public delegate void OnCommandReceived(Vector2 destination, Selectable destinationSelectable);
+    public delegate void OnCommandReceived(Vector2 destination, GameObject destinationObject);
 
 }
