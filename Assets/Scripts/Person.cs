@@ -44,6 +44,8 @@ public class Person : MonoBehaviour {
                         this.interactingSource.Mine();
                     }
                 }
+            } else {
+                this.commandable.MoveTo(this.interactingSource.gameObject);
             }
         }
     }
@@ -70,9 +72,11 @@ public class Person : MonoBehaviour {
         }
 
         // interact with resource source
-        this.interactingSource = destination.GetComponent<ResourceSource>();
-        if (this.interactingSource)
-            this.resourceToBeGathered = this.interactingSource.type;
+        var source = destination.GetComponent<ResourceSource>();
+        if (source) {
+            this.resourceToBeGathered = source.type;
+            this.interactingSource = source;
+        }
     }
 
     private void OnCommandReceived(Vector2 destination, GameObject destinationObj, bool fromPlayer) {

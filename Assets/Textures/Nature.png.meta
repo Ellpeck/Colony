@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: 2818415227679610127
     second: Nature_0
+  - first:
+      213: 774397507195319065
+    second: Nature_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -117,6 +120,27 @@ TextureImporter:
       bones: []
       spriteID: 86f88f976e0fcb3428e0c22c64c5f42d
       internalID: 2818415227679610127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nature_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 196
+        width: 18
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5292151, y: 0.14315523}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d217034329b3d2a4fbcc683005414fdf
+      internalID: 774397507195319065
       vertices: []
       indices: 
       edges: []

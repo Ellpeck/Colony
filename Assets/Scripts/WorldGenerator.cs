@@ -5,15 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class WorldGenerator : MonoBehaviour {
 
+    public int size;
     public Tilemap ground;
     public Transform decorations;
     public Transform people;
-    public Person person;
-    public GameObject townCenter;
     public TextAsset names;
-
-    [Space] public int width;
-    public int height;
 
     [Space] public float perlinScale1;
     public float perlinScale2;
@@ -34,6 +30,13 @@ public class WorldGenerator : MonoBehaviour {
     public int objectSpawnTries;
     public int objectSpawnRadius;
     public float personCount;
+    public Person person;
+    public GameObject townCenter;
+
+    [Space] public int berryBushVeinAmount;
+    public int berryBushVeinSize;
+    public int berryBushAmountPerVein;
+    public GameObject berryBush;
 
     private int seed;
     private string[] nameArray;
@@ -47,8 +50,8 @@ public class WorldGenerator : MonoBehaviour {
     private IEnumerator GenerateMap() {
         Random.InitState(this.seed);
 
-        for (var x = 0; x < this.width; x++) {
-            for (var y = 0; y < this.height; y++) {
+        for (var x = 0; x < this.size; x++) {
+            for (var y = 0; y < this.size; y++) {
                 var noise = (Mathf.PerlinNoise(this.seed + x / this.perlinScale1, this.seed + y / this.perlinScale1) +
                              Mathf.PerlinNoise(this.seed + x / this.perlinScale2, this.seed + y / this.perlinScale2) * 3F) / 4F;
                 Tile tile;
@@ -74,9 +77,22 @@ public class WorldGenerator : MonoBehaviour {
 
         yield return null; // tilemap collider updates in LateUpdate, so wait a frame
 
+        for (var i = 0; i < this.berryBushVeinAmount; i++) {
+            var center = this.GetPosAroundCenter(this.size / 2 - this.berryBushVeinSize);
+            for (var j = 0; j < this.berryBushAmountPerVein; j++) {
+                var pos = center + new Vector3Int(
+                              Random.Range(-this.berryBushVeinSize, this.berryBushVeinSize),
+                              Random.Range(-this.berryBushVeinSize, this.berryBushVeinSize), 0);
+                var worldPos = this.ground.GetCellCenterWorld(pos);
+                if (!Physics2D.OverlapCircle(worldPos, 0.5F, this.objectCollisionLayers)) {
+                    Instantiate(this.berryBush, worldPos, Quaternion.identity, this.decorations);
+                }
+            }
+        }
+
         var townCenterColl = this.townCenter.GetComponent<BoxCollider2D>();
         for (var i = 0; i < this.objectSpawnTries; i++) {
-            var pos = this.GetPosAroundCenter(this.objectSpawnRadius);
+            var pos = this.ground.GetCellCenterWorld(this.GetPosAroundCenter(this.objectSpawnRadius));
             if (!Physics2D.OverlapBox(pos, townCenterColl.size, 0, this.objectCollisionLayers)) {
                 Instantiate(this.townCenter, pos, Quaternion.identity, this.decorations);
                 break;
@@ -85,7 +101,7 @@ public class WorldGenerator : MonoBehaviour {
 
         var peopleSpawned = 0;
         for (var i = 0; i < this.objectSpawnTries; i++) {
-            var pos = this.GetPosAroundCenter(this.objectSpawnRadius);
+            var pos = this.ground.GetCellCenterWorld(this.GetPosAroundCenter(this.objectSpawnRadius));
             if (!Physics2D.OverlapCircle(pos, 0.5F, this.objectCollisionLayers)) {
                 this.CreatePerson(pos);
                 peopleSpawned++;
@@ -97,10 +113,10 @@ public class WorldGenerator : MonoBehaviour {
         AstarPath.active.Scan();
     }
 
-    private Vector3 GetPosAroundCenter(int radius) {
-        var x = Random.Range(-radius, radius) + this.width / 2;
-        var y = Random.Range(-radius, radius) + this.height / 2;
-        return this.ground.GetCellCenterWorld(new Vector3Int(x, y, 0));
+    private Vector3Int GetPosAroundCenter(int radius) {
+        var x = Random.Range(-radius, radius) + this.size / 2;
+        var y = Random.Range(-radius, radius) + this.size / 2;
+        return new Vector3Int(x, y, 0);
     }
 
     public Person CreatePerson(Vector2 position) {
