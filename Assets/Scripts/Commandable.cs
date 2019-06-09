@@ -49,18 +49,18 @@ public class Commandable : MonoBehaviour {
         if (this.selectable.IsSelected && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject()) {
             var dest = SelectionManager.Instance.hoveringObject;
             if (dest) {
-                this.MoveTo(dest.gameObject);
+                this.MoveTo(dest.gameObject, true);
             } else {
-                this.MoveTo(this.camera.ScreenToWorldPoint(Input.mousePosition));
+                this.MoveTo(this.camera.ScreenToWorldPoint(Input.mousePosition), null, true);
             }
         }
     }
 
-    public void MoveTo(GameObject destination) {
-        this.MoveTo(destination.transform.position, destination);
+    public void MoveTo(GameObject destination, bool fromPlayer = false) {
+        this.MoveTo(destination.transform.position, destination, fromPlayer);
     }
 
-    public void MoveTo(Vector2 pos, GameObject destination = null) {
+    public void MoveTo(Vector2 pos, GameObject destination, bool fromPlayer = false) {
         this.seeker.StartPath(this.body.position, pos, this.OnPathCalculated);
 
         if (this.currentWaypointMarker)
@@ -70,7 +70,7 @@ public class Commandable : MonoBehaviour {
 
         this.destination = destination;
         if (this.onCommandReceived != null)
-            this.onCommandReceived(pos, destination);
+            this.onCommandReceived(pos, destination, fromPlayer);
     }
 
     private void FixedUpdate() {
@@ -120,6 +120,6 @@ public class Commandable : MonoBehaviour {
 
     public delegate void OnTargetReached(GameObject destination);
 
-    public delegate void OnCommandReceived(Vector2 destination, GameObject destinationObject);
+    public delegate void OnCommandReceived(Vector2 destination, GameObject destinationObject, bool fromPlayer);
 
 }

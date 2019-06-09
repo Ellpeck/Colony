@@ -19,6 +19,8 @@ public class FreePersonIndicator : MonoBehaviour {
             this.currentlySelected = index;
             return;
         }
+
+        SelectionManager.Instance.Select(null, true);
         this.currentlySelected = -1;
     }
 
