@@ -8,6 +8,11 @@ public class Selectable : MonoBehaviour {
     public Color selectedColor;
     public Color hoverColor;
 
+    public string menuName;
+    public Sprite menuSprite;
+
+    public OnSelection onSelection;
+
     public bool IsSelected { get; private set; }
 
     public void OnHover() {
@@ -29,6 +34,8 @@ public class Selectable : MonoBehaviour {
             this.outline.color = this.selectedColor;
         }
         this.IsSelected = true;
+        if (this.onSelection != null)
+            this.onSelection(true);
     }
 
     public void OnDeselect() {
@@ -36,6 +43,10 @@ public class Selectable : MonoBehaviour {
             this.outline.gameObject.SetActive(false);
         }
         this.IsSelected = false;
+        if (this.onSelection != null)
+            this.onSelection(false);
     }
+
+    public delegate void OnSelection(bool select);
 
 }

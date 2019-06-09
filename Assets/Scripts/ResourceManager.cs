@@ -12,6 +12,8 @@ public class ResourceManager : MonoBehaviour {
     public Resource gold;
     public Resource food;
 
+    public Sprite[] resourceSprites;
+
     public Resource[] Resources { get; private set; }
 
     private void Awake() {

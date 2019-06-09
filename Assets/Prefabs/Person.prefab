@@ -118,6 +118,9 @@ MonoBehaviour:
   outline: {fileID: 3892446509568060690}
   selectedColor: {r: 0, g: 1, b: 0.10007763, a: 1}
   hoverColor: {r: 0, g: 1, b: 0.10196079, a: 0.44705883}
+  menuName: Person
+  menuSprite: {fileID: -1644172504589110628, guid: fd338c36b70bcf94cb7cd02b14c871fb,
+    type: 3}
 --- !u!114 &-3696622249838448240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 1.5
   maxWaypointDistance: 0.25
+  waypointMarker: {fileID: 3832567475731754766, guid: adb0e56e4bbf42a49ae43fff397fb959,
+    type: 3}
 --- !u!114 &6970151867861238035
 MonoBehaviour:
   m_ObjectHideFlags: 0

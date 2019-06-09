@@ -148,6 +148,9 @@ MonoBehaviour:
   outline: {fileID: 8802698752267877728}
   selectedColor: {r: 1, g: 0.70388687, b: 0, a: 1}
   hoverColor: {r: 1, g: 0.7019608, b: 0, a: 0.44705883}
+  menuName: Tree
+  menuSprite: {fileID: 2818415227679610127, guid: 0d00b2eb0c45a2741a7c52daa7ad3df4,
+    type: 3}
 --- !u!70 &3518747099926375046
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

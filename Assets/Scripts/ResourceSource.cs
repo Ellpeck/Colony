@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResourceSource : MonoBehaviour {
 
     public Resource.Type type;
-    [SerializeField] private int amount;
+    public int amount;
 
     public static ResourceSource GetClosest(Vector3 position, Resource.Type type) {
         ResourceSource closest = null;

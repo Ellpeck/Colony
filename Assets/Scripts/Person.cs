@@ -15,6 +15,8 @@ public class Person : MonoBehaviour {
     private ResourceSource interactingSource;
     private bool stopCurrentInteraction;
 
+    public Resource CarryingResource => this.carryingResource;
+
     private void Start() {
         this.commandable = this.GetComponent<Commandable>();
         this.commandable.onTargetReached += this.OnTargetReached;

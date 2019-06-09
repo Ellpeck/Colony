@@ -9,6 +9,8 @@ public class Commandable : MonoBehaviour {
 
     public float movementSpeed;
     public float maxWaypointDistance;
+    public GameObject waypointMarker;
+
     public OnTargetReached onTargetReached;
     public OnCommandReceived onCommandReceived;
 
@@ -22,13 +24,20 @@ public class Commandable : MonoBehaviour {
     private int currentWaypoint;
     private bool facingLeft;
     private GameObject destination;
+    private GameObject currentWaypointMarker;
 
     private void Start() {
         this.selectable = this.GetComponent<Selectable>();
+        this.selectable.onSelection += this.OnSelection;
         this.seeker = this.GetComponent<Seeker>();
         this.body = this.GetComponent<Rigidbody2D>();
         this.animator = this.GetComponentInChildren<Animator>();
         this.camera = Camera.main;
+    }
+
+    private void OnSelection(bool selected) {
+        if (this.currentWaypointMarker)
+            this.currentWaypointMarker.SetActive(selected);
     }
 
     private void Update() {
@@ -49,6 +58,11 @@ public class Commandable : MonoBehaviour {
     public void MoveTo(Vector2 pos, GameObject destination = null) {
         this.seeker.StartPath(this.body.position, pos, this.OnPathCalculated);
 
+        if (this.currentWaypointMarker)
+            Destroy(this.currentWaypointMarker);
+        this.currentWaypointMarker = Instantiate(this.waypointMarker, pos, Quaternion.identity);
+        this.currentWaypointMarker.SetActive(this.selectable.IsSelected);
+
         this.destination = destination;
         if (this.onCommandReceived != null)
             this.onCommandReceived(pos, destination);
@@ -64,9 +78,11 @@ public class Commandable : MonoBehaviour {
                 if (dist <= this.maxWaypointDistance) {
                     this.currentWaypoint++;
                     if (this.currentWaypoint >= path.Count) {
+                        if (this.currentWaypointMarker)
+                            Destroy(this.currentWaypointMarker);
+                        this.currentPath = null;
                         if (this.onTargetReached != null)
                             this.onTargetReached(this.destination);
-                        this.currentPath = null;
                         return;
                     }
                 } else {
