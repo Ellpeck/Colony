@@ -147,6 +147,7 @@ MonoBehaviour:
   chopSpeed: 1
   maxTargetDistance: 0.75
   maxCarryAmount: 10
+  maxNextSourceDistance: 10
 --- !u!1 &3892446509568060692
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,11 +8,11 @@ public class Building : MonoBehaviour {
 
     public Type type;
 
-    public static Building GetClosestBuilding(Vector3 position, params Type[] types) {
+    public static Building GetClosest(Vector3 position, BuildingFilter filter = null) {
         Building closest = null;
         var closestDistance = float.MaxValue;
         foreach (var building in FindObjectsOfType<Building>()) {
-            if (!types.Contains(building.type))
+            if (filter != null && !filter(building))
                 continue;
             var dist = (position - building.transform.position).sqrMagnitude;
             if (dist < closestDistance) {
@@ -22,6 +22,12 @@ public class Building : MonoBehaviour {
         }
         return closest;
     }
+
+    public bool CanStore(Resource.Type type) {
+        return this.type == Type.TownCenter;
+    }
+
+    public delegate bool BuildingFilter(Building building);
 
     public enum Type {
 
