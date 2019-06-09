@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Commandable : MonoBehaviour {
 
@@ -35,13 +36,17 @@ public class Commandable : MonoBehaviour {
         this.camera = Camera.main;
     }
 
+    public bool IsBusy() {
+        return this.currentPath != null;
+    }
+
     private void OnSelection(bool selected) {
         if (this.currentWaypointMarker)
             this.currentWaypointMarker.SetActive(selected);
     }
 
     private void Update() {
-        if (this.selectable.IsSelected && Input.GetMouseButtonDown(1)) {
+        if (this.selectable.IsSelected && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject()) {
             var dest = SelectionManager.Instance.hoveringObject;
             if (dest) {
                 this.MoveTo(dest.gameObject);

@@ -9,18 +9,20 @@ public class Person : MonoBehaviour {
     public int maxCarryAmount;
     public float maxNextSourceDistance;
 
+    public Resource CarryingResource { get; private set; }
     private Commandable commandable;
-    private Resource carryingResource;
     private GameObject pausedInteraction;
     private ResourceSource interactingSource;
     private bool stopCurrentInteraction;
-
-    public Resource CarryingResource => this.carryingResource;
 
     private void Start() {
         this.commandable = this.GetComponent<Commandable>();
         this.commandable.onTargetReached += this.OnTargetReached;
         this.commandable.onCommandReceived += this.OnCommandReceived;
+    }
+
+    public bool IsBusy() {
+        return this.commandable.IsBusy() || this.interactingSource;
     }
 
     private void OnTargetReached(GameObject destination) {
@@ -32,9 +34,9 @@ public class Person : MonoBehaviour {
         // interact with building
         var building = destination.GetComponent<Building>();
         if (building) {
-            if (this.carryingResource != null && building.storeableTypes.Contains(this.carryingResource.type)) {
-                ResourceManager.Instance.Add(this.carryingResource.type, this.carryingResource.amount);
-                this.carryingResource = null;
+            if (this.CarryingResource != null && building.storeableTypes.Contains(this.CarryingResource.type)) {
+                ResourceManager.Instance.Add(this.CarryingResource.type, this.CarryingResource.amount);
+                this.CarryingResource = null;
             }
         }
 
@@ -81,24 +83,24 @@ public class Person : MonoBehaviour {
     }
 
     private bool Carry(Resource.Type type, int amount) {
-        if (this.carryingResource != null) {
-            if (this.carryingResource.type != type)
+        if (this.CarryingResource != null) {
+            if (this.CarryingResource.type != type)
                 return false;
-            if (this.carryingResource.amount >= this.maxCarryAmount)
+            if (this.CarryingResource.amount >= this.maxCarryAmount)
                 return false;
         } else {
-            this.carryingResource = new Resource {
+            this.CarryingResource = new Resource {
                 type = type
             };
         }
-        this.carryingResource.amount += amount;
+        this.CarryingResource.amount += amount;
         return true;
     }
 
     private void StoreCarrying() {
-        if (this.carryingResource == null)
+        if (this.CarryingResource == null)
             return;
-        Building.BuildingFilter filter = building => building.storeableTypes.Contains(this.carryingResource.type);
+        Building.BuildingFilter filter = building => building.storeableTypes.Contains(this.CarryingResource.type);
         var closest = Building.GetClosest(this.transform.position, filter);
         if (closest)
             this.commandable.MoveTo(closest.gameObject);

@@ -118,7 +118,7 @@ MonoBehaviour:
   outline: {fileID: 3892446509568060690}
   selectedColor: {r: 0, g: 1, b: 0.10007763, a: 1}
   hoverColor: {r: 0, g: 1, b: 0.10196079, a: 0.44705883}
-  menuName: Person
+  menuName: Villager
   menuSprite: {fileID: -1644172504589110628, guid: fd338c36b70bcf94cb7cd02b14c871fb,
     type: 3}
 --- !u!114 &-3696622249838448240
@@ -323,7 +323,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -240327516165942470, guid: fd338c36b70bcf94cb7cd02b14c871fb,
+  m_Sprite: {fileID: -1644172504589110628, guid: fd338c36b70bcf94cb7cd02b14c871fb,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

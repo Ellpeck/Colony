@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SelectionManager : MonoBehaviour {
 
@@ -18,10 +19,15 @@ public class SelectionManager : MonoBehaviour {
     }
 
     private void Update() {
+        if (EventSystem.current.IsPointerOverGameObject()) {
+            if (this.hoveringObject)
+                this.hoveringObject.OnStopHover();
+            this.hoveringObject = null;
+            return;
+        }
+
         if (this.selectedObjects.Count > 0 && Input.GetMouseButtonDown(0) && !Input.GetKey(KeyCode.LeftControl)) {
-            foreach (var obj in this.selectedObjects)
-                obj.OnDeselect();
-            this.selectedObjects.Clear();
+            this.Select(null, true);
         }
 
         var pos = Input.mousePosition;
@@ -37,14 +43,26 @@ public class SelectionManager : MonoBehaviour {
             }
 
             if (Input.GetMouseButtonDown(0)) {
-                this.selectedObjects.Add(selectable);
-                selectable.OnSelect();
+                this.Select(selectable, false);
             }
         } else {
             if (this.hoveringObject) {
                 this.hoveringObject.OnStopHover();
                 this.hoveringObject = null;
             }
+        }
+    }
+
+    public void Select(Selectable selectable, bool clearOthers) {
+        if (clearOthers) {
+            foreach (var obj in this.selectedObjects)
+                obj.OnDeselect();
+            this.selectedObjects.Clear();
+        }
+
+        if (selectable) {
+            this.selectedObjects.Add(selectable);
+            selectable.OnSelect();
         }
     }
 

@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour {
 
+    public static CameraController Instance { get; private set; }
     public float closestZoom;
     public float farthestZoom;
     public bool invertZoom;
@@ -13,7 +15,13 @@ public class CameraController : MonoBehaviour {
     private Vector3 lastMousePos;
 
     private void Start() {
+        Instance = this;
         this.camera = this.GetComponent<Camera>();
+    }
+
+    public void CenterCameraOn(Vector2 position) {
+        var trans = this.camera.transform;
+        trans.position = new Vector3(position.x, position.y, trans.position.z);
     }
 
     private void Update() {
@@ -21,7 +29,7 @@ public class CameraController : MonoBehaviour {
         var posDelta = this.lastMousePos - mousePos;
         if (posDelta != Vector3.zero) {
             var worldDelta = this.camera.ScreenToWorldPoint(this.lastMousePos) - this.camera.ScreenToWorldPoint(mousePos);
-            if (Input.GetMouseButton(2)) {
+            if (Input.GetMouseButton(2) && !EventSystem.current.IsPointerOverGameObject()) {
                 this.camera.transform.position += worldDelta;
             }
 
