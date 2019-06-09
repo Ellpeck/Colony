@@ -7,6 +7,7 @@ using UnityEngine;
 public class Building : MonoBehaviour {
 
     public Type type;
+    public List<Resource.Type> storeableTypes;
 
     public static Building GetClosest(Vector3 position, BuildingFilter filter = null) {
         Building closest = null;
@@ -21,10 +22,6 @@ public class Building : MonoBehaviour {
             }
         }
         return closest;
-    }
-
-    public bool CanStore(Resource.Type type) {
-        return this.type == Type.TownCenter;
     }
 
     public delegate bool BuildingFilter(Building building);

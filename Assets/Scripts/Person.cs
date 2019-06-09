@@ -30,7 +30,7 @@ public class Person : MonoBehaviour {
         // interact with building
         var building = destination.GetComponent<Building>();
         if (building) {
-            if (this.carryingResource != null && building.CanStore(this.carryingResource.type)) {
+            if (this.carryingResource != null && building.storeableTypes.Contains(this.carryingResource.type)) {
                 ResourceManager.Instance.Add(this.carryingResource.type, this.carryingResource.amount);
                 this.carryingResource = null;
             }
@@ -96,7 +96,7 @@ public class Person : MonoBehaviour {
     private void StoreCarrying() {
         if (this.carryingResource == null)
             return;
-        Building.BuildingFilter filter = building => building.CanStore(this.carryingResource.type);
+        Building.BuildingFilter filter = building => building.storeableTypes.Contains(this.carryingResource.type);
         var closest = Building.GetClosest(this.transform.position, filter);
         if (closest)
             this.commandable.MoveTo(closest.gameObject);

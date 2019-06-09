@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,6 +9,7 @@ public class GroundGenerator : MonoBehaviour {
     public Transform decorations;
     public Transform people;
     public GameObject person;
+    public GameObject townCenter;
 
     [Space] public int width;
     public int height;
@@ -27,9 +29,9 @@ public class GroundGenerator : MonoBehaviour {
     public int treeDensity;
     public GameObject tree;
 
-    [Space] public LayerMask personCollisionLayers;
-    public int personSpawnTries;
-    public int personSpawnRadius;
+    [Space] public LayerMask objectCollisionLayers;
+    public int objectSpawnTries;
+    public int objectSpawnRadius;
     public float personCount;
 
     private int seed;
@@ -69,13 +71,20 @@ public class GroundGenerator : MonoBehaviour {
 
         yield return null; // tilemap collider updates in LateUpdate, so wait a frame
 
+        var townCenterColl = this.townCenter.GetComponent<BoxCollider2D>();
+        for (var i = 0; i < this.objectSpawnTries; i++) {
+            var pos = this.GetPosAroundCenter(this.objectSpawnRadius);
+            if (!Physics2D.OverlapBox(pos, townCenterColl.size, 0, this.objectCollisionLayers)) {
+                Instantiate(this.townCenter, pos, Quaternion.identity, this.decorations);
+                break;
+            }
+        }
+
         var peopleSpawned = 0;
-        for (var i = 0; i < this.personSpawnTries; i++) {
-            var x = Random.Range(-this.personSpawnRadius, this.personSpawnRadius) + this.width / 2;
-            var y = Random.Range(-this.personSpawnRadius, this.personSpawnRadius) + this.height / 2;
-            var cell = this.ground.GetCellCenterWorld(new Vector3Int(x, y, 0));
-            if (!Physics2D.OverlapCircle(cell, 0.5F, this.personCollisionLayers)) {
-                Instantiate(this.person, cell, Quaternion.identity, this.people);
+        for (var i = 0; i < this.objectSpawnTries; i++) {
+            var pos = this.GetPosAroundCenter(this.objectSpawnRadius);
+            if (!Physics2D.OverlapCircle(pos, 0.5F, this.objectCollisionLayers)) {
+                Instantiate(this.person, pos, Quaternion.identity, this.people);
                 peopleSpawned++;
                 if (peopleSpawned >= this.personCount)
                     break;
@@ -83,6 +92,12 @@ public class GroundGenerator : MonoBehaviour {
         }
 
         AstarPath.active.Scan();
+    }
+
+    private Vector3 GetPosAroundCenter(int radius) {
+        var x = Random.Range(-radius, radius) + this.width / 2;
+        var y = Random.Range(-radius, radius) + this.height / 2;
+        return this.ground.GetCellCenterWorld(new Vector3Int(x, y, 0));
     }
 
 }
