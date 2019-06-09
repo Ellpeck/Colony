@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class GroundGenerator : MonoBehaviour {
+public class WorldGenerator : MonoBehaviour {
 
     public Tilemap ground;
     public Transform decorations;
     public Transform people;
-    public GameObject person;
+    public Person person;
     public GameObject townCenter;
+    public TextAsset names;
 
     [Space] public int width;
     public int height;
@@ -35,9 +36,11 @@ public class GroundGenerator : MonoBehaviour {
     public float personCount;
 
     private int seed;
+    private string[] nameArray;
 
     private void Start() {
         this.seed = Random.Range(0, 100000);
+        this.nameArray = this.names.text.Split('\n');
         this.StartCoroutine(this.GenerateMap());
     }
 
@@ -84,7 +87,7 @@ public class GroundGenerator : MonoBehaviour {
         for (var i = 0; i < this.objectSpawnTries; i++) {
             var pos = this.GetPosAroundCenter(this.objectSpawnRadius);
             if (!Physics2D.OverlapCircle(pos, 0.5F, this.objectCollisionLayers)) {
-                Instantiate(this.person, pos, Quaternion.identity, this.people);
+                this.CreatePerson(pos);
                 peopleSpawned++;
                 if (peopleSpawned >= this.personCount)
                     break;
@@ -98,6 +101,13 @@ public class GroundGenerator : MonoBehaviour {
         var x = Random.Range(-radius, radius) + this.width / 2;
         var y = Random.Range(-radius, radius) + this.height / 2;
         return this.ground.GetCellCenterWorld(new Vector3Int(x, y, 0));
+    }
+
+    public Person CreatePerson(Vector2 position) {
+        var newPerson = Instantiate(this.person, position, Quaternion.identity, this.people);
+        var selectable = newPerson.GetComponent<Selectable>();
+        selectable.menuName = this.nameArray[Random.Range(0, this.nameArray.Length)];
+        return newPerson;
     }
 
 }
