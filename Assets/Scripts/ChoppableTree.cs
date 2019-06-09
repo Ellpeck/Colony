@@ -8,8 +8,10 @@ public class ChoppableTree : MonoBehaviour {
 
     public int Chop() {
         this.woodAmount--;
-        if (this.woodAmount <= 0)
+        if (this.woodAmount <= 0) {
             Destroy(this.gameObject);
+            AstarPath.active.Scan();
+        }
         return 1;
     }
 

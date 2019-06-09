@@ -80,6 +80,11 @@ public class Commandable : MonoBehaviour {
         this.currentWaypoint = 0;
     }
 
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(this.transform.position, this.maxWaypointDistance);
+    }
+
     public delegate void OnTargetReached(Selectable destinationSelectable);
 
     public delegate void OnCommandReceived(Vector2 destination, Selectable destinationSelectable);
