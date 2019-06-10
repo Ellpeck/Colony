@@ -1798,6 +1798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   closestZoom: 1
   farthestZoom: 30
+  keyMoveSpeed: 0.05
   invertZoom: 0
 --- !u!20 &519420031
 Camera:
