@@ -11,6 +11,7 @@ public class Commandable : MonoBehaviour {
     public float movementSpeed;
     public float maxWaypointDistance;
     public GameObject waypointMarker;
+    public int discoveryRadius;
 
     public OnTargetReached onTargetReached;
     public OnCommandReceived onCommandReceived;
@@ -26,6 +27,7 @@ public class Commandable : MonoBehaviour {
     private bool facingLeft;
     private GameObject destination;
     private GameObject currentWaypointMarker;
+    private Vector2 lastDiscoveryPosition;
 
     private void Start() {
         this.selectable = this.GetComponent<Selectable>();
@@ -34,6 +36,8 @@ public class Commandable : MonoBehaviour {
         this.body = this.GetComponent<Rigidbody2D>();
         this.animator = this.GetComponentInChildren<Animator>();
         this.camera = Camera.main;
+
+        WorldGenerator.Instance.Discover(this.transform.position, this.discoveryRadius);
     }
 
     public bool IsBusy() {
@@ -53,6 +57,12 @@ public class Commandable : MonoBehaviour {
             } else {
                 this.MoveTo(this.camera.ScreenToWorldPoint(Input.mousePosition), null, true);
             }
+        }
+
+        Vector2 pos = this.transform.position;
+        if ((pos - this.lastDiscoveryPosition).sqrMagnitude > 1) {
+            this.lastDiscoveryPosition = pos;
+            WorldGenerator.Instance.Discover(pos, this.discoveryRadius);
         }
     }
 

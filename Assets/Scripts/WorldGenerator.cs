@@ -1,15 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class WorldGenerator : MonoBehaviour {
 
+    public static WorldGenerator Instance { get; private set; }
+
     public int size;
     public Tilemap ground;
+    public Tilemap darkness;
     public Transform decorations;
     public Transform people;
     public TextAsset names;
+
+    [Space] public Tile darknessTile;
+    public int darknessBorder;
 
     [Space] public float perlinScale1;
     public float perlinScale2;
@@ -42,6 +49,7 @@ public class WorldGenerator : MonoBehaviour {
     private string[] nameArray;
 
     private void Start() {
+        Instance = this;
         this.seed = Random.Range(0, 100000);
         this.nameArray = this.names.text.Split('\n');
         this.StartCoroutine(this.GenerateMap());
@@ -49,6 +57,12 @@ public class WorldGenerator : MonoBehaviour {
 
     private IEnumerator GenerateMap() {
         Random.InitState(this.seed);
+
+        for (var x = -this.darknessBorder; x < this.size + this.darknessBorder; x++) {
+            for (var y = -this.darknessBorder; y < this.size + this.darknessBorder; y++) {
+                this.darkness.SetTile(new Vector3Int(x, y, 0), this.darknessTile);
+            }
+        }
 
         for (var x = 0; x < this.size; x++) {
             for (var y = 0; y < this.size; y++) {
@@ -95,6 +109,7 @@ public class WorldGenerator : MonoBehaviour {
             var pos = this.ground.GetCellCenterWorld(this.GetPosAroundCenter(this.objectSpawnRadius));
             if (!Physics2D.OverlapBox(pos, townCenterColl.size, 0, this.objectCollisionLayers)) {
                 Instantiate(this.townCenter, pos, Quaternion.identity, this.decorations);
+                CameraController.Instance.CenterCameraOn(pos);
                 break;
             }
         }
@@ -110,6 +125,14 @@ public class WorldGenerator : MonoBehaviour {
             }
         }
 
+        var worldCenter = this.ground.CellToWorld(new Vector3Int(this.size / 2, this.size / 2, 0));
+        foreach (var graph in AstarPath.active.graphs) {
+            var grid = graph as GridGraph;
+            if (grid != null) {
+                grid.center = worldCenter;
+                grid.SetDimensions(this.size, this.size, grid.nodeSize);
+            }
+        }
         AstarPath.active.Scan();
     }
 
@@ -117,6 +140,23 @@ public class WorldGenerator : MonoBehaviour {
         var x = Random.Range(-radius, radius) + this.size / 2;
         var y = Random.Range(-radius, radius) + this.size / 2;
         return new Vector3Int(x, y, 0);
+    }
+
+    public void Discover(Vector2 position, int radius) {
+        var local = this.darkness.WorldToCell(position);
+        for (var x = -radius; x <= radius; x++) {
+            for (var y = -radius; y <= radius; y++) {
+                var offset = local + new Vector3Int(x, y, 0);
+                if (Vector3Int.Distance(local, offset) < radius) {
+                    this.darkness.SetTile(offset, null);
+                }
+            }
+        }
+    }
+
+    public bool IsDiscovered(Vector2 position) {
+        var local = this.darkness.WorldToCell(position);
+        return !this.darkness.GetTile(local);
     }
 
     public Person CreatePerson(Vector2 position) {

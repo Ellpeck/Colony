@@ -14,6 +14,9 @@ TextureImporter:
   - first:
       213: -5930158604282628446
     second: Ground_3
+  - first:
+      213: -4233739483619845583
+    second: Ground_4
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -118,13 +121,13 @@ TextureImporter:
         width: 32
         height: 19
       alignment: 9
-      pivot: {x: 0.49999997, y: 0.65}
+      pivot: {x: 0.5, y: 0.65}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7985a1c457f7bba4e8e83cd23834928c
+      spriteID: 74d6816abc54541469e59e936ef60475
       internalID: 6682738439518977790
       vertices: []
       indices: 
@@ -145,7 +148,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a85ecf9154e59ee46831fd879eec3bc0
+      spriteID: 0fe1f2e1c44bc634cba1bf6ba6921c6a
       internalID: -562605217060080129
       vertices: []
       indices: 
@@ -166,7 +169,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 324c87df39f7b55458a2ce1369f20131
+      spriteID: dc637101f2ee2ff49a89c0c6cae11ec4
       internalID: -4970410492042351176
       vertices: []
       indices: 
@@ -181,14 +184,35 @@ TextureImporter:
         width: 32
         height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a59d78d39a34c0d4d9f19baaeae605a0
+      spriteID: 8345d59991405684e8b1d5cd2bcaa396
       internalID: -5930158604282628446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 218
+        width: 32
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f67ffc96b6a1b804c8cb868124f4fa31
+      internalID: -4233739483619845583
       vertices: []
       indices: 
       edges: []

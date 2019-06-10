@@ -19,7 +19,9 @@ public class SelectionManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (EventSystem.current.IsPointerOverGameObject()) {
+        var pos = Input.mousePosition;
+        if (EventSystem.current.IsPointerOverGameObject()
+            || !WorldGenerator.Instance.IsDiscovered(this.camera.ScreenToWorldPoint(pos))) {
             if (this.hoveringObject)
                 this.hoveringObject.OnStopHover();
             this.hoveringObject = null;
@@ -30,7 +32,6 @@ public class SelectionManager : MonoBehaviour {
             this.Select(null, true);
         }
 
-        var pos = Input.mousePosition;
         var ray = this.camera.ScreenPointToRay(pos);
         var trace = Physics2D.GetRayIntersection(ray, Mathf.Infinity, this.objectLayers);
         if (trace) {

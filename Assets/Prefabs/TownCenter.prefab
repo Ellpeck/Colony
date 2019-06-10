@@ -12,6 +12,47 @@ PrefabInstance:
       propertyPath: m_Name
       value: TownCenter
       objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: storeableTypes.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: storeableTypes.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: storeableTypes.Array.data[2]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: storeableTypes.Array.data[3]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: storeableTypes.Array.data[4]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: discoveryRadius
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: menuName
+      value: Town Center
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: menuSprite
+      value: 
+      objectReference: {fileID: -8078966772632430244, guid: fe2aa609d41969c459d79fe66364c118,
+        type: 3}
     - target: {fileID: 3927899578790795718, guid: 56dc410a7c3d125409b7fa70de3f9d71,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -66,42 +107,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: menuName
-      value: Town Center
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: menuSprite
-      value: 
-      objectReference: {fileID: -8078966772632430244, guid: fe2aa609d41969c459d79fe66364c118,
-        type: 3}
-    - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: storeableTypes.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: storeableTypes.Array.data[1]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: storeableTypes.Array.data[2]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: storeableTypes.Array.data[3]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: storeableTypes.Array.data[4]
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56dc410a7c3d125409b7fa70de3f9d71, type: 3}

@@ -8,6 +8,11 @@ public class Building : MonoBehaviour {
 
     public Type type;
     public List<Resource.Type> storeableTypes;
+    public int discoveryRadius;
+
+    private void Start() {
+        WorldGenerator.Instance.Discover(this.transform.position, this.discoveryRadius);
+    }
 
     public static Building GetClosest(Vector3 position, BuildingFilter filter = null) {
         Building closest = null;

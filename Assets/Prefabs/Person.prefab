@@ -137,6 +137,7 @@ MonoBehaviour:
   maxWaypointDistance: 0.25
   waypointMarker: {fileID: 3832567475731754766, guid: adb0e56e4bbf42a49ae43fff397fb959,
     type: 3}
+  discoveryRadius: 5
 --- !u!114 &6970151867861238035
 MonoBehaviour:
   m_ObjectHideFlags: 0
