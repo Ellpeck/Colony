@@ -34,11 +34,12 @@ public class WorldGenerator : MonoBehaviour {
     public GameObject tree;
 
     [Space] public LayerMask objectCollisionLayers;
-    public int objectSpawnTries;
-    public int objectSpawnRadius;
+    public int townCenterSpawnRadius;
+    public int personSpawnTries;
+    public int personSpawnRadius;
     public float personCount;
     public Person person;
-    public GameObject townCenter;
+    public Building townCenter;
 
     [Space] public int berryBushVeinAmount;
     public int berryBushVeinSize;
@@ -52,6 +53,7 @@ public class WorldGenerator : MonoBehaviour {
         Instance = this;
         this.seed = Random.Range(0, 100000);
         this.nameArray = this.names.text.Split('\n');
+
         this.StartCoroutine(this.GenerateMap());
     }
 
@@ -92,7 +94,9 @@ public class WorldGenerator : MonoBehaviour {
         yield return null; // tilemap collider updates in LateUpdate, so wait a frame
 
         for (var i = 0; i < this.berryBushVeinAmount; i++) {
-            var center = this.GetPosAroundCenter(this.size / 2 - this.berryBushVeinSize);
+            var center = new Vector3Int(
+                Random.Range(this.berryBushVeinSize, this.size - this.berryBushVeinSize),
+                Random.Range(this.berryBushVeinSize, this.size - this.berryBushVeinSize), 0);
             for (var j = 0; j < this.berryBushAmountPerVein; j++) {
                 var pos = center + new Vector3Int(
                               Random.Range(-this.berryBushVeinSize, this.berryBushVeinSize),
@@ -104,21 +108,28 @@ public class WorldGenerator : MonoBehaviour {
             }
         }
 
-        var townCenterColl = this.townCenter.GetComponent<BoxCollider2D>();
-        for (var i = 0; i < this.objectSpawnTries; i++) {
-            var pos = this.ground.GetCellCenterWorld(this.GetPosAroundCenter(this.objectSpawnRadius));
-            if (!Physics2D.OverlapBox(pos, townCenterColl.size, 0, this.objectCollisionLayers)) {
-                Instantiate(this.townCenter, pos, Quaternion.identity, this.decorations);
-                CameraController.Instance.CenterCameraOn(pos);
-                break;
+        var townCenterInst = Instantiate(this.townCenter, this.decorations);
+        for (var x = -this.townCenterSpawnRadius; x <= this.townCenterSpawnRadius; x++) {
+            for (var y = -this.townCenterSpawnRadius; y <= this.townCenterSpawnRadius; y++) {
+                var pos = this.ground.GetCellCenterWorld(new Vector3Int(this.size / 2 + x, this.size / 2 + y, 0));
+                townCenterInst.transform.position = pos;
+                yield return null; // wait a frame for the collider to be updated to the new position
+                if (townCenterInst.IsValidPosition()) {
+                    townCenterInst.SetGhost(false);
+                    CameraController.Instance.CenterCameraOn(pos);
+                    goto townCenterSpawned;
+                }
             }
         }
+        townCenterSpawned:
 
         var peopleSpawned = 0;
-        for (var i = 0; i < this.objectSpawnTries; i++) {
-            var pos = this.ground.GetCellCenterWorld(this.GetPosAroundCenter(this.objectSpawnRadius));
-            if (!Physics2D.OverlapCircle(pos, 0.5F, this.objectCollisionLayers)) {
-                this.CreatePerson(pos);
+        for (var i = 0; i < this.personSpawnTries; i++) {
+            var randomPos = townCenterInst.transform.position + new Vector3(
+                                Random.Range(-this.personSpawnRadius, this.personSpawnRadius),
+                                Random.Range(-this.personSpawnRadius, this.personSpawnRadius));
+            if (!Physics2D.OverlapCircle(randomPos, 0.5F, this.objectCollisionLayers)) {
+                this.CreatePerson(randomPos);
                 peopleSpawned++;
                 if (peopleSpawned >= this.personCount)
                     break;
@@ -134,12 +145,6 @@ public class WorldGenerator : MonoBehaviour {
             }
         }
         AstarPath.active.Scan();
-    }
-
-    private Vector3Int GetPosAroundCenter(int radius) {
-        var x = Random.Range(-radius, radius) + this.size / 2;
-        var y = Random.Range(-radius, radius) + this.size / 2;
-        return new Vector3Int(x, y, 0);
     }
 
     public void Discover(Vector2 position, int radius) {

@@ -19,16 +19,20 @@ public class ObjectInfoOverlay : MonoBehaviour {
     public TextMeshProUGUI resourceInfoAmount;
     public Image resourceInfoIcon;
 
-    private void Update() {
+    private Person selectedPerson;
+    private ResourceSource selectedSource;
+
+    private void Start() {
+        SelectionManager.Instance.onSelectionChanged += this.OnSelectionChanged;
+    }
+
+    private void OnSelectionChanged() {
         var selectables = SelectionManager.Instance.selectedObjects;
-        if (selectables.Count <= 0) {
+        Selectable selectable;
+        if (selectables.Count <= 0 || !(selectable = selectables[selectables.Count - 1])) {
             this.panel.SetActive(false);
-            return;
-        }
-        
-        var selectable = selectables[selectables.Count - 1];
-        if (!selectable) {
-            this.panel.SetActive(false);
+            this.selectedPerson = null;
+            this.selectedSource = null;
             return;
         }
 
@@ -36,28 +40,27 @@ public class ObjectInfoOverlay : MonoBehaviour {
         this.nameText.text = selectable.menuName;
         this.icon.sprite = selectable.menuSprite;
 
-        var person = selectable.GetComponent<Person>();
-        if (person) {
-            this.personInfo.SetActive(true);
-            var carrying = person.CarryingResource != null;
+        this.selectedPerson = selectable.GetComponent<Person>();
+        this.personInfo.SetActive(this.selectedPerson);
+        this.selectedSource = selectable.GetComponent<ResourceSource>();
+        this.resourceInfo.SetActive(this.selectedSource);
+    }
+
+    private void LateUpdate() {
+        if (this.selectedPerson) {
+            var carrying = this.selectedPerson.CarryingResource != null;
             this.personInfoAmount.gameObject.SetActive(carrying);
             this.personInfoIcon.gameObject.SetActive(carrying);
             this.personInfoNothing.SetActive(!carrying);
             if (carrying) {
-                this.personInfoAmount.text = person.CarryingResource.amount.ToString();
-                this.personInfoIcon.sprite = ResourceManager.Instance.resourceSprites[(int) person.CarryingResource.type];
+                this.personInfoAmount.text = this.selectedPerson.CarryingResource.amount.ToString();
+                this.personInfoIcon.sprite = ResourceManager.Instance.resourceSprites[(int) this.selectedPerson.CarryingResource.type];
             }
-        } else {
-            this.personInfo.SetActive(false);
         }
 
-        var resource = selectable.GetComponent<ResourceSource>();
-        if (resource) {
-            this.resourceInfo.SetActive(true);
-            this.resourceInfoAmount.text = resource.amount.ToString();
-            this.resourceInfoIcon.sprite = ResourceManager.Instance.resourceSprites[(int) resource.type];
-        } else {
-            this.resourceInfo.SetActive(false);
+        if (this.selectedSource) {
+            this.resourceInfoAmount.text = this.selectedSource.amount.ToString();
+            this.resourceInfoIcon.sprite = ResourceManager.Instance.resourceSprites[(int) this.selectedSource.type];
         }
     }
 

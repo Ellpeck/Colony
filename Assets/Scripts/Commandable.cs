@@ -51,11 +51,13 @@ public class Commandable : MonoBehaviour {
 
     private void Update() {
         if (this.selectable.IsSelected && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject()) {
-            var dest = SelectionManager.Instance.hoveringObject;
-            if (dest) {
-                this.MoveTo(dest.gameObject, true);
-            } else {
-                this.MoveTo(this.camera.ScreenToWorldPoint(Input.mousePosition), null, true);
+            if (!SelectionManager.Instance.placingBuilding) {
+                var dest = SelectionManager.Instance.hoveringObject;
+                if (dest) {
+                    this.MoveTo(dest.gameObject, true);
+                } else {
+                    this.MoveTo(this.camera.ScreenToWorldPoint(Input.mousePosition), null, true);
+                }
             }
         }
 

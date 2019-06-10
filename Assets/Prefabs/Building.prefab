@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3927899578582003231}
-  - component: {fileID: 3927899578582003224}
+  - component: {fileID: 5112282524183274289}
   m_Layer: 10
   m_Name: Collision
   m_TagString: Untagged
@@ -31,8 +31,8 @@ Transform:
   m_Father: {fileID: 3927899578790795718}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &3927899578582003224
-BoxCollider2D:
+--- !u!60 &5112282524183274289
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -44,7 +44,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0756557, y: -0.73071957}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -54,9 +54,15 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3.3129077, y: 1.2922878}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.54581654, y: 0.0088710785}
+      - {x: -0.45951593, y: 0.14372444}
+      - {x: -1.7088088, y: -0.8731594}
+      - {x: -1.0396152, y: -1.1970348}
+      - {x: -0.45494717, y: -0.8710327}
+      - {x: 0.5523619, y: -1.4025784}
+      - {x: 1.579823, y: -0.8781071}
 --- !u!1 &3927899578790795716
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +114,8 @@ MonoBehaviour:
   outline: {fileID: 3927899579104339189}
   selectedColor: {r: 0, g: 0.5328388, b: 1, a: 1}
   hoverColor: {r: 0, g: 0.53333336, b: 1, a: 0.5647059}
+  menuName: 
+  menuSprite: {fileID: 0}
 --- !u!114 &3927899578790795717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +130,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   storeableTypes: 
+  placementBlockingLayers:
+    serializedVersion: 2
+    m_Bits: 1280
+  discoveryRadius: 0
+  isGhost: 0
 --- !u!61 &3927899578790795712
 BoxCollider2D:
   m_ObjectHideFlags: 0

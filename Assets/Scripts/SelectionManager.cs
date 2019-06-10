@@ -10,21 +10,45 @@ public class SelectionManager : MonoBehaviour {
     public LayerMask objectLayers;
     public List<Selectable> selectedObjects;
     public Selectable hoveringObject;
+    public Color ghostColor;
+    public Color invalidGhostColor;
+    public Building placingBuilding;
+    public OnSelectionChanged onSelectionChanged;
 
     private new Camera camera;
 
-    private void Start() {
+    private void Awake() {
         Instance = this;
+    }
+
+    private void Start() {
         this.camera = Camera.main;
     }
 
     private void Update() {
         var pos = Input.mousePosition;
-        if (EventSystem.current.IsPointerOverGameObject()
-            || !WorldGenerator.Instance.IsDiscovered(this.camera.ScreenToWorldPoint(pos))) {
+        Vector2 worldPos = this.camera.ScreenToWorldPoint(pos);
+        if (EventSystem.current.IsPointerOverGameObject() || !WorldGenerator.Instance.IsDiscovered(worldPos)) {
             if (this.hoveringObject)
                 this.hoveringObject.OnStopHover();
             this.hoveringObject = null;
+            if (this.placingBuilding)
+                this.placingBuilding.SetGhostColor(new Color(0, 0, 0, 0));
+            return;
+        }
+
+        if (this.placingBuilding) {
+            var valid = this.placingBuilding.IsValidPosition();
+            this.placingBuilding.SetGhostColor(valid ? this.ghostColor : this.invalidGhostColor);
+            if (valid && Input.GetMouseButtonDown(0)) {
+                this.placingBuilding.SetGhost(false);
+                this.placingBuilding = null;
+                AstarPath.active.Scan();
+            } else {
+                var ground = WorldGenerator.Instance.ground;
+                var placePos = ground.GetCellCenterWorld(ground.WorldToCell(worldPos));
+                this.placingBuilding.transform.position = placePos;
+            }
             return;
         }
 
@@ -65,6 +89,11 @@ public class SelectionManager : MonoBehaviour {
             this.selectedObjects.Add(selectable);
             selectable.OnSelect();
         }
+
+        if (this.onSelectionChanged != null)
+            this.onSelectionChanged();
     }
+
+    public delegate void OnSelectionChanged();
 
 }
