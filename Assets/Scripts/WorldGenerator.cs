@@ -58,6 +58,7 @@ public class WorldGenerator : MonoBehaviour {
     }
 
     private IEnumerator GenerateMap() {
+        var startTime = Time.realtimeSinceStartup;
         Random.InitState(this.seed);
 
         for (var x = -this.darknessBorder; x < this.size + this.darknessBorder; x++) {
@@ -91,7 +92,7 @@ public class WorldGenerator : MonoBehaviour {
             }
         }
 
-        yield return null; // tilemap collider updates in LateUpdate, so wait a frame
+        yield return new WaitForEndOfFrame(); // tilemap collider updates in LateUpdate, so wait
 
         for (var i = 0; i < this.berryBushVeinAmount; i++) {
             var center = new Vector3Int(
@@ -113,7 +114,7 @@ public class WorldGenerator : MonoBehaviour {
             for (var y = -this.townCenterSpawnRadius; y <= this.townCenterSpawnRadius; y++) {
                 var pos = this.ground.GetCellCenterWorld(new Vector3Int(this.size / 2 + x, this.size / 2 + y, 0));
                 townCenterInst.transform.position = pos;
-                yield return null; // wait a frame for the collider to be updated to the new position
+                yield return new WaitForFixedUpdate(); // wait for the town center's collider to move
                 if (townCenterInst.IsValidPosition()) {
                     townCenterInst.SetGhost(false);
                     CameraController.Instance.CenterCameraOn(pos);
@@ -145,6 +146,8 @@ public class WorldGenerator : MonoBehaviour {
             }
         }
         AstarPath.active.Scan();
+
+        Debug.Log("Generated world in " + (Time.realtimeSinceStartup - startTime) + " seconds");
     }
 
     public void Discover(Vector2 position, int radius) {
