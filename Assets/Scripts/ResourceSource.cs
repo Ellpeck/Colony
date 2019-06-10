@@ -7,14 +7,14 @@ public class ResourceSource : MonoBehaviour {
     public Resource.Type type;
     public int amount;
 
-    public static ResourceSource GetClosest(Vector3 position, Resource.Type type) {
+    public static ResourceSource GetClosest(Vector3 position, Resource.Type type, float maxDistance) {
         ResourceSource closest = null;
         var closestDistance = float.MaxValue;
         foreach (var source in FindObjectsOfType<ResourceSource>()) {
-            if (source.type != type)
+            if (source.type != type || !WorldGenerator.Instance.IsDiscovered(source.transform.position))
                 continue;
             var dist = (position - source.transform.position).sqrMagnitude;
-            if (dist < closestDistance) {
+            if (dist < closestDistance && dist < maxDistance * maxDistance) {
                 closestDistance = dist;
                 closest = source;
             }

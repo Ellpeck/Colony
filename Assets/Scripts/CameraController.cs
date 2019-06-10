@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour {
     public static CameraController Instance { get; private set; }
     public float closestZoom;
     public float farthestZoom;
+    public float keyMoveSpeed;
     public bool invertZoom;
 
     private new Camera camera;
@@ -28,8 +29,8 @@ public class CameraController : MonoBehaviour {
         var mousePos = Input.mousePosition;
         var posDelta = this.lastMousePos - mousePos;
         if (posDelta != Vector3.zero) {
-            var worldDelta = this.camera.ScreenToWorldPoint(this.lastMousePos) - this.camera.ScreenToWorldPoint(mousePos);
             if (Input.GetMouseButton(2) && !EventSystem.current.IsPointerOverGameObject()) {
+                var worldDelta = this.camera.ScreenToWorldPoint(this.lastMousePos) - this.camera.ScreenToWorldPoint(mousePos);
                 this.camera.transform.position += worldDelta;
             }
 
@@ -39,6 +40,10 @@ public class CameraController : MonoBehaviour {
         var zoomDelta = Input.mouseScrollDelta.y;
         var newZoom = this.camera.orthographicSize - (this.invertZoom ? -zoomDelta : zoomDelta);
         this.camera.orthographicSize = Mathf.Clamp(newZoom, this.closestZoom, this.farthestZoom);
+
+        var horizontal = Input.GetAxisRaw("Horizontal");
+        var vertical = Input.GetAxisRaw("Vertical");
+        this.camera.transform.position += new Vector3(horizontal, vertical) * this.keyMoveSpeed * this.camera.orthographicSize;
     }
 
 }

@@ -25,8 +25,8 @@ public class Person : MonoBehaviour {
         if (!this.commandable.IsBusy() && this.resourceToBeGathered != null) {
             if (!this.interactingSource) {
                 // if the resource we are gathering has depleted, find a new resource close by
-                var next = ResourceSource.GetClosest(this.transform.position, this.resourceToBeGathered.Value);
-                if (next && Vector2.Distance(this.transform.position, next.transform.position) <= this.maxNextSourceDistance) {
+                var next = ResourceSource.GetClosest(this.transform.position, this.resourceToBeGathered.Value, this.maxNextSourceDistance);
+                if (next) {
                     this.commandable.MoveTo(next.gameObject);
                 } else {
                     this.resourceToBeGathered = null;
