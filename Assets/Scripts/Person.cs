@@ -77,7 +77,8 @@ public class Person : MonoBehaviour {
                             foreach (var res in this.constructingBuilding.requiredResources) {
                                 if (!building.storeableTypes.Contains(res.type))
                                     continue;
-                                return ResourceManager.Instance.GetResourceAmount(res.type) > 0;
+                                if (ResourceManager.Instance.GetResourceAmount(res.type) > 0)
+                                    return true;
                             }
                             return false;
                         };
