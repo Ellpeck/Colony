@@ -116,7 +116,7 @@ public class WorldGenerator : MonoBehaviour {
                 townCenterInst.transform.position = pos;
                 yield return new WaitForFixedUpdate(); // wait for the town center's collider to move
                 if (townCenterInst.IsValidPosition()) {
-                    townCenterInst.SetGhost(false);
+                    townCenterInst.SetMode(false, true);
                     CameraController.Instance.CenterCameraOn(pos);
                     goto townCenterSpawned;
                 }

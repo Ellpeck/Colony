@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Person : MonoBehaviour {
 
     public float chopSpeed;
+    public float buildSpeed;
     public float maxTargetDistance;
     public int maxCarryAmount;
     public float maxNextSourceDistance;
@@ -13,7 +15,8 @@ public class Person : MonoBehaviour {
     private Commandable commandable;
     private ResourceSource interactingSource;
     private Resource.Type? resourceToBeGathered;
-    private float chopTimer;
+    private Building constructingBuilding;
+    private float actionTimer;
 
     private void Start() {
         this.commandable = this.GetComponent<Commandable>();
@@ -22,36 +25,83 @@ public class Person : MonoBehaviour {
     }
 
     private void Update() {
-        if (!this.commandable.IsBusy() && this.resourceToBeGathered != null) {
+        if (this.commandable.IsBusy())
+            return;
+        if (this.resourceToBeGathered != null) {
             if (!this.interactingSource) {
                 // if the resource we are gathering has depleted, find a new resource close by
                 var next = ResourceSource.GetClosest(this.transform.position, this.resourceToBeGathered.Value, this.maxNextSourceDistance);
                 if (next) {
-                    this.commandable.MoveTo(next.gameObject);
+                    this.MoveTo(next.gameObject);
                 } else {
                     this.resourceToBeGathered = null;
                 }
             } else if (this.IsInRange(this.interactingSource.transform.position)) {
                 // gather the resource
-                this.chopTimer += Time.deltaTime;
-                if (this.chopTimer >= this.chopSpeed) {
-                    this.chopTimer = 0;
+                this.actionTimer += Time.deltaTime;
+                if (this.actionTimer >= this.chopSpeed) {
+                    this.actionTimer = 0;
                     if (!this.Carry(this.interactingSource.type, 1)) {
                         // carry items to a building because we are full
-                        this.StoreCarrying();
+                        Building.BuildingFilter filter = building =>
+                            building.storeableTypes.Contains(this.CarryingResource.type);
+                        var closest = Building.GetClosest(this.transform.position, filter);
+                        if (closest)
+                            this.MoveTo(closest.gameObject);
                     } else {
                         // mine the resource
                         this.interactingSource.Mine();
                     }
                 }
             } else {
-                this.commandable.MoveTo(this.interactingSource.gameObject);
+                this.MoveTo(this.interactingSource.gameObject);
+            }
+        } else if (this.constructingBuilding) {
+            // if the building we're constructing is finished, then our work is done
+            if (this.constructingBuilding.IsFinished) {
+                this.constructingBuilding = null;
+                return;
+            }
+            // construct building if it is in range
+            if (this.IsInRange(this.constructingBuilding.transform.position)) {
+                this.actionTimer += Time.deltaTime;
+                if (this.actionTimer >= this.buildSpeed) {
+                    this.actionTimer = 0;
+                    // if the building can be fed the current resource
+                    if (this.CarryingResource != null && this.constructingBuilding.FeedResource(this.CarryingResource.type)) {
+                        // deposit an item in it
+                        this.Deposit(1);
+                    } else {
+                        // otherwise, find a building that has the required resources
+                        Building.BuildingFilter filter = building => {
+                            foreach (var res in this.constructingBuilding.requiredResources) {
+                                if (!building.storeableTypes.Contains(res.type))
+                                    continue;
+                                return ResourceManager.Instance.GetResourceAmount(res.type) > 0;
+                            }
+                            return false;
+                        };
+                        var closest = Building.GetClosest(this.transform.position, filter);
+                        if (closest) {
+                            this.MoveTo(closest.gameObject);
+                        } else {
+                            // if no building was found that has the resources needed, then quit working
+                            this.constructingBuilding = null;
+                        }
+                    }
+                }
+            } else {
+                this.MoveTo(this.constructingBuilding.gameObject);
             }
         }
     }
 
+    public void MoveTo(GameObject destination) {
+        this.commandable.MoveTo(destination);
+    }
+
     public bool IsBusy() {
-        return this.commandable.IsBusy() || this.resourceToBeGathered != null;
+        return this.commandable.IsBusy() || this.resourceToBeGathered != null || this.constructingBuilding != null;
     }
 
     private bool IsInRange(Vector2 position) {
@@ -65,10 +115,32 @@ public class Person : MonoBehaviour {
         // interact with building
         var building = destination.GetComponent<Building>();
         if (building) {
-            if (this.CarryingResource != null && building.storeableTypes.Contains(this.CarryingResource.type)) {
-                ResourceManager.Instance.Add(this.CarryingResource.type, this.CarryingResource.amount);
-                this.CarryingResource = null;
+            if (building.IsFinished) {
+                // store the resource we are currently holding
+                if (this.CarryingResource != null && building.storeableTypes.Contains(this.CarryingResource.type)) {
+                    ResourceManager.Instance.Add(this.CarryingResource.type, this.CarryingResource.amount);
+                    this.CarryingResource = null;
+                }
+
+                // if a building is currently being constructed, pick up the required ingredients
+                if (this.constructingBuilding != null) {
+                    foreach (var res in this.constructingBuilding.requiredResources) {
+                        if (!building.storeableTypes.Contains(res.type))
+                            continue;
+                        var taken = ResourceManager.Instance.Take(res.type, Mathf.Min(res.amount, this.maxCarryAmount));
+                        if (taken > 0) {
+                            this.CarryingResource = new Resource {
+                                type = res.type,
+                                amount = taken
+                            };
+                            break;
+                        }
+                    }
+                }
+            } else {
+                this.constructingBuilding = building;
             }
+            return;
         }
 
         // interact with resource source
@@ -83,6 +155,7 @@ public class Person : MonoBehaviour {
         if (fromPlayer) {
             this.resourceToBeGathered = null;
             this.interactingSource = null;
+            this.constructingBuilding = null;
         }
     }
 
@@ -101,13 +174,13 @@ public class Person : MonoBehaviour {
         return true;
     }
 
-    private void StoreCarrying() {
+    private bool Deposit(int amount) {
         if (this.CarryingResource == null)
-            return;
-        Building.BuildingFilter filter = building => building.storeableTypes.Contains(this.CarryingResource.type);
-        var closest = Building.GetClosest(this.transform.position, filter);
-        if (closest)
-            this.commandable.MoveTo(closest.gameObject);
+            return false;
+        this.CarryingResource.amount--;
+        if (this.CarryingResource.amount <= 0)
+            this.CarryingResource = null;
+        return true;
     }
 
     private void OnDrawGizmosSelected() {

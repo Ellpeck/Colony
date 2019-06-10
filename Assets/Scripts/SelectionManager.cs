@@ -41,9 +41,14 @@ public class SelectionManager : MonoBehaviour {
             var valid = this.placingBuilding.IsValidPosition();
             this.placingBuilding.SetGhostColor(valid ? this.ghostColor : this.invalidGhostColor);
             if (valid && Input.GetMouseButtonDown(0)) {
-                this.placingBuilding.SetGhost(false);
+                this.placingBuilding.SetMode(false, false);
+                this.placingBuilding.UpdateGraph();
+                foreach (var obj in this.selectedObjects) {
+                    var person = obj.GetComponent<Person>();
+                    if (person)
+                        person.MoveTo(this.placingBuilding.gameObject);
+                }
                 this.placingBuilding = null;
-                AstarPath.active.Scan();
             } else {
                 var ground = WorldGenerator.Instance.ground;
                 var placePos = ground.GetCellCenterWorld(ground.WorldToCell(worldPos));
@@ -76,6 +81,10 @@ public class SelectionManager : MonoBehaviour {
                 this.hoveringObject = null;
             }
         }
+    }
+
+    public bool IsBusy() {
+        return this.placingBuilding;
     }
 
     public void Select(Selectable selectable, bool clearOthers) {

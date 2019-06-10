@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chopSpeed: 1
+  buildSpeed: 0.5
   maxTargetDistance: 0.75
   maxCarryAmount: 10
   maxNextSourceDistance: 10

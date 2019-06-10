@@ -28,9 +28,4 @@ public class ResourceSource : MonoBehaviour {
             Destroy(this.gameObject);
     }
 
-    private void OnDestroy() {
-        if (AstarPath.active)
-            AstarPath.active.Scan();
-    }
-
 }

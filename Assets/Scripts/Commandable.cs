@@ -51,7 +51,7 @@ public class Commandable : MonoBehaviour {
 
     private void Update() {
         if (this.selectable.IsSelected && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject()) {
-            if (!SelectionManager.Instance.placingBuilding) {
+            if (!SelectionManager.Instance.IsBusy()) {
                 var dest = SelectionManager.Instance.hoveringObject;
                 if (dest) {
                     this.MoveTo(dest.gameObject, true);

@@ -14,7 +14,7 @@ public class BuildInstruction : MonoBehaviour {
 
     public void OnClick() {
         var inst = Instantiate(this.buildingToPlace, WorldGenerator.Instance.decorations);
-        inst.SetGhost(true);
+        inst.SetMode(true, true);
         SelectionManager.Instance.placingBuilding = inst;
     }
 

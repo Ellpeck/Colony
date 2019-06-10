@@ -30,4 +30,23 @@ public class ResourceManager : MonoBehaviour {
         }
     }
 
+    public int Take(Resource.Type type, int amount) {
+        foreach (var res in this.Resources) {
+            if (res.type == type) {
+                var taken = Mathf.Min(amount, res.amount);
+                res.amount -= taken;
+                return taken;
+            }
+        }
+        return 0;
+    }
+
+    public int GetResourceAmount(Resource.Type type) {
+        foreach (var res in this.Resources) {
+            if (res.type == type)
+                return res.amount;
+        }
+        return 0;
+    }
+
 }

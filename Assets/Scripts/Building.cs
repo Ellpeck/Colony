@@ -9,14 +9,23 @@ public class Building : MonoBehaviour {
     public Type type;
     public List<Resource.Type> storeableTypes;
     public int discoveryRadius;
-    public bool isGhost;
+    public Sprite unfinishedSprite;
+    public List<Resource> requiredResources;
+    public SpriteRenderer mainRenderer;
+
+    public bool IsGhost { get; private set; }
+    public bool IsFinished { get; private set; }
 
     private SpriteRenderer[] renderers;
     private PolygonCollider2D collision;
+    private UpdatePathfindingGraph graphUpdate;
+    private Sprite finishedSprite;
 
     private void Awake() {
         this.renderers = this.GetComponentsInChildren<SpriteRenderer>();
+        this.finishedSprite = this.mainRenderer.sprite;
         this.collision = this.GetComponentInChildren<PolygonCollider2D>();
+        this.graphUpdate = this.GetComponentInChildren<UpdatePathfindingGraph>();
     }
 
     public bool IsValidPosition() {
@@ -26,13 +35,15 @@ public class Building : MonoBehaviour {
         return Physics2D.OverlapCollider(this.collision, filter, new Collider2D[1]) <= 0;
     }
 
-    public void SetGhost(bool ghost) {
-        this.isGhost = ghost;
+    public void SetMode(bool ghost, bool finished) {
+        this.IsGhost = ghost;
+        this.IsFinished = finished;
 
-        if (!ghost) {
+        this.mainRenderer.sprite = finished ? this.finishedSprite : this.unfinishedSprite;
+        if (!ghost)
             this.SetGhostColor(Color.white);
+        if (finished)
             WorldGenerator.Instance.Discover(this.transform.position, this.discoveryRadius);
-        }
     }
 
     public void SetGhostColor(Color color) {
@@ -41,11 +52,32 @@ public class Building : MonoBehaviour {
         }
     }
 
+    public void UpdateGraph() {
+        this.graphUpdate.UpdateGraph();
+    }
+
+    public bool FeedResource(Resource.Type type) {
+        var rightOne = false;
+        foreach (var resource in this.requiredResources) {
+            if (resource.type == type) {
+                rightOne = true;
+
+                resource.amount--;
+                if (resource.amount <= 0)
+                    this.requiredResources.Remove(resource);
+                break;
+            }
+        }
+        if (this.requiredResources.Count <= 0)
+            this.SetMode(false, true);
+        return rightOne;
+    }
+
     public static Building GetClosest(Vector3 position, BuildingFilter filter = null) {
         Building closest = null;
         var closestDistance = float.MaxValue;
         foreach (var building in FindObjectsOfType<Building>()) {
-            if (building.isGhost)
+            if (building.IsGhost || !building.IsFinished)
                 continue;
             if (filter != null && !filter(building))
                 continue;

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3927899578582003231}
   - component: {fileID: 5112282524183274289}
+  - component: {fileID: 4616887751319073059}
   m_Layer: 10
   m_Name: Collision
   m_TagString: Untagged
@@ -63,6 +64,19 @@ PolygonCollider2D:
       - {x: -0.45494717, y: -0.8710327}
       - {x: 0.5523619, y: -1.4025784}
       - {x: 1.579823, y: -0.8781071}
+--- !u!114 &4616887751319073059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3927899578582003230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33869ce2c7fc41342b8630d234d6efa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateOnDestroy: 0
 --- !u!1 &3927899578790795716
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,11 +144,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   storeableTypes: 
-  placementBlockingLayers:
-    serializedVersion: 2
-    m_Bits: 1280
   discoveryRadius: 0
-  isGhost: 0
+  unfinishedSprite: {fileID: 0}
+  requiredResources: []
+  mainRenderer: {fileID: 3927899579386390284}
 --- !u!61 &3927899578790795712
 BoxCollider2D:
   m_ObjectHideFlags: 0
