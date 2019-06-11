@@ -2,23 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpdatePathfindingGraph : MonoBehaviour {
+public class PathableObject : MonoBehaviour {
 
     public bool updateOnDestroy;
     public float boundExpand = 1;
 
-    private new Collider2D collider;
+    public Collider2D Collider { get; private set; }
 
     private void Start() {
-        this.collider = this.GetComponent<Collider2D>();
+        this.Collider = this.GetComponent<Collider2D>();
     }
 
     public void UpdateGraph() {
         if (AstarPath.active) {
-            var bounds = this.collider.bounds;
+            var bounds = this.Collider.bounds;
             bounds.Expand(this.boundExpand);
             AstarPath.active.UpdateGraphs(bounds);
         }
+    }
+
+    public Vector2 GetPathPoint(Vector2 from) {
+        var closest = this.Collider.bounds.ClosestPoint(from);
+        return closest;
     }
 
     private void OnDestroy() {

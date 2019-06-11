@@ -17,22 +17,20 @@ public class Building : MonoBehaviour {
     public bool IsFinished { get; private set; }
 
     private SpriteRenderer[] renderers;
-    private PolygonCollider2D collision;
-    private UpdatePathfindingGraph graphUpdate;
+    private PathableObject pathableObject;
     private Sprite finishedSprite;
 
     private void Awake() {
         this.renderers = this.GetComponentsInChildren<SpriteRenderer>();
         this.finishedSprite = this.mainRenderer.sprite;
-        this.collision = this.GetComponentInChildren<PolygonCollider2D>();
-        this.graphUpdate = this.GetComponentInChildren<UpdatePathfindingGraph>();
+        this.pathableObject = this.GetComponentInChildren<PathableObject>();
     }
 
     public bool IsValidPosition() {
         var filter = new ContactFilter2D();
         filter.useTriggers = true;
         filter.SetLayerMask(WorldGenerator.Instance.objectCollisionLayers);
-        return Physics2D.OverlapCollider(this.collision, filter, new Collider2D[1]) <= 0;
+        return Physics2D.OverlapCollider(this.pathableObject.Collider, filter, new Collider2D[1]) <= 0;
     }
 
     public void SetMode(bool ghost, bool finished) {
@@ -53,7 +51,7 @@ public class Building : MonoBehaviour {
     }
 
     public void UpdateGraph() {
-        this.graphUpdate.UpdateGraph();
+        this.pathableObject.UpdateGraph();
     }
 
     public bool FeedResource(Resource.Type type) {

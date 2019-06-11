@@ -70,7 +70,14 @@ public class Commandable : MonoBehaviour {
     }
 
     public void MoveTo(GameObject destination, bool fromPlayer = false) {
-        this.MoveTo(destination.transform.position, destination, fromPlayer);
+        Vector2 goal;
+        var pathable = destination.GetComponentInChildren<PathableObject>();
+        if (pathable) {
+            goal = pathable.GetPathPoint(this.transform.position);
+        } else {
+            goal = destination.transform.position;
+        }
+        this.MoveTo(goal, destination, fromPlayer);
     }
 
     public void MoveTo(Vector2 pos, GameObject destination, bool fromPlayer = false) {

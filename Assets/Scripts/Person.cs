@@ -35,7 +35,7 @@ public class Person : MonoBehaviour {
                 } else {
                     this.resourceToBeGathered = null;
                 }
-            } else if (this.IsInRange(this.interactingSource.transform.position)) {
+            } else if (this.IsInRange(this.interactingSource.gameObject)) {
                 // gather the resource
                 this.actionTimer += Time.deltaTime;
                 if (this.actionTimer >= this.chopSpeed) {
@@ -62,7 +62,7 @@ public class Person : MonoBehaviour {
                 return;
             }
             // construct building if it is in range
-            if (this.IsInRange(this.constructingBuilding.transform.position)) {
+            if (this.IsInRange(this.constructingBuilding.gameObject)) {
                 this.actionTimer += Time.deltaTime;
                 if (this.actionTimer >= this.buildSpeed) {
                     this.actionTimer = 0;
@@ -106,12 +106,19 @@ public class Person : MonoBehaviour {
                || this.constructingBuilding != null && !this.isWaitingForBuildingResources;
     }
 
-    private bool IsInRange(Vector2 position) {
+    private bool IsInRange(GameObject destination) {
+        Vector2 position;
+        var pathable = destination.GetComponentInChildren<PathableObject>();
+        if (pathable) {
+            position = pathable.GetPathPoint(this.transform.position);
+        } else {
+            position = destination.transform.position;
+        }
         return Vector2.Distance(this.transform.position, position) <= this.maxTargetDistance;
     }
 
     public void OnTargetReached(GameObject destination) {
-        if (destination == null || !this.IsInRange(destination.transform.position))
+        if (destination == null || !this.IsInRange(destination))
             return;
 
         // interact with building
