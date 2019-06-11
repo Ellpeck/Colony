@@ -16,6 +16,7 @@ public class Person : MonoBehaviour {
     private ResourceSource interactingSource;
     private Resource.Type? resourceToBeGathered;
     private Building constructingBuilding;
+    private bool isWaitingForBuildingResources;
     private float actionTimer;
 
     private void Start() {
@@ -83,9 +84,9 @@ public class Person : MonoBehaviour {
                         var closest = Building.GetClosest(this.transform.position, filter);
                         if (closest) {
                             this.MoveTo(closest.gameObject);
+                            this.isWaitingForBuildingResources = false;
                         } else {
-                            // if no building was found that has the resources needed, then quit working
-                            this.constructingBuilding = null;
+                            this.isWaitingForBuildingResources = true;
                         }
                     }
                 }
@@ -100,7 +101,9 @@ public class Person : MonoBehaviour {
     }
 
     public bool IsBusy() {
-        return this.commandable.IsBusy() || this.resourceToBeGathered != null || this.constructingBuilding != null;
+        return this.commandable.IsBusy()
+               || this.resourceToBeGathered != null
+               || this.constructingBuilding != null && !this.isWaitingForBuildingResources;
     }
 
     private bool IsInRange(Vector2 position) {
