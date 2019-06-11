@@ -2296,7 +2296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &478661965
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2340,6 +2340,7 @@ MonoBehaviour:
   resourceInfoAmount: {fileID: 1616249070}
   resourceInfoIcon: {fileID: 1149117766}
   buildingInfo: {fileID: 1037828267}
+  requiredText: {fileID: 1425369521}
   buildingResourceInfos:
   - {fileID: 8728405666905292775}
   - {fileID: 777645874}
@@ -5995,7 +5996,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2079189051
 RectTransform:
   m_ObjectHideFlags: 0
