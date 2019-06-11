@@ -38,10 +38,11 @@ public class Building : MonoBehaviour {
         this.IsFinished = finished;
 
         this.mainRenderer.sprite = finished ? this.finishedSprite : this.unfinishedSprite;
-        if (!ghost)
+        if (!ghost) {
             this.SetGhostColor(Color.white);
-        if (finished)
-            WorldGenerator.Instance.Discover(this.transform.position, this.discoveryRadius);
+            if (finished)
+                WorldGenerator.Instance.Discover(this.transform.position, this.discoveryRadius);
+        }
     }
 
     public void SetGhostColor(Color color) {
