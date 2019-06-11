@@ -57,13 +57,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.54581654, y: 0.0088710785}
-      - {x: -0.45951593, y: 0.14372444}
-      - {x: -1.7088088, y: -0.8731594}
-      - {x: -1.0396152, y: -1.1970348}
-      - {x: -0.45494717, y: -0.8710327}
-      - {x: 0.5523619, y: -1.4025784}
-      - {x: 1.579823, y: -0.8781071}
+    - - {x: 0, y: 1}
+      - {x: -0.95105654, y: 0.30901697}
+      - {x: -0.5877852, y: -0.80901706}
+      - {x: 0.58778536, y: -0.80901694}
+      - {x: 0.9510565, y: 0.30901712}
 --- !u!114 &4616887751319073059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33869ce2c7fc41342b8630d234d6efa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateOnDestroy: 0
+  updateOnDestroy: 1
   boundExpand: 1
 --- !u!1 &3927899578790795716
 GameObject:
@@ -131,6 +129,11 @@ MonoBehaviour:
   hoverColor: {r: 0, g: 0.53333336, b: 1, a: 0.5647059}
   menuName: 
   menuSprite: {fileID: 0}
+  onSelection:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Selectable+OnSelection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &3927899578790795717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,8 +328,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -8078966772632430244, guid: fe2aa609d41969c459d79fe66364c118,
-    type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -334,6 +336,6 @@ SpriteRenderer:
   m_Size: {x: 3.6875, y: 2.78125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1

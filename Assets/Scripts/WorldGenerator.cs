@@ -58,7 +58,7 @@ public class WorldGenerator : MonoBehaviour {
     }
 
     private IEnumerator GenerateMap() {
-        var startTime = Time.realtimeSinceStartup;
+        Physics2D.autoSyncTransforms = true;
         Random.InitState(this.seed);
 
         for (var x = -this.darknessBorder; x < this.size + this.darknessBorder; x++) {
@@ -114,7 +114,6 @@ public class WorldGenerator : MonoBehaviour {
             for (var y = -this.townCenterSpawnRadius; y <= this.townCenterSpawnRadius; y++) {
                 var pos = this.ground.GetCellCenterWorld(new Vector3Int(this.size / 2 + x, this.size / 2 + y, 0));
                 townCenterInst.transform.position = pos;
-                yield return new WaitForFixedUpdate(); // wait for the town center's collider to move
                 if (townCenterInst.IsValidPosition()) {
                     townCenterInst.SetMode(false, true);
                     CameraController.Instance.CenterCameraOn(pos);
@@ -146,8 +145,8 @@ public class WorldGenerator : MonoBehaviour {
             }
         }
         AstarPath.active.Scan();
-
-        Debug.Log("Generated world in " + (Time.realtimeSinceStartup - startTime) + " seconds");
+        
+        Physics2D.autoSyncTransforms = false;
     }
 
     public void Discover(Vector2 position, int radius) {

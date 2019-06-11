@@ -9,7 +9,7 @@ public class PathableObject : MonoBehaviour {
 
     public Collider2D Collider { get; private set; }
 
-    private void Start() {
+    private void Awake() {
         this.Collider = this.GetComponent<Collider2D>();
     }
 
