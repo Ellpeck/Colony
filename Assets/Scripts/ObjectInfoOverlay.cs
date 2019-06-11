@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,8 +20,13 @@ public class ObjectInfoOverlay : MonoBehaviour {
     public TextMeshProUGUI resourceInfoAmount;
     public Image resourceInfoIcon;
 
+    [Space] public GameObject buildingInfo;
+    public TextMeshProUGUI requiredText;
+    public ResourceInfo[] buildingResourceInfos;
+
     private Person selectedPerson;
     private ResourceSource selectedSource;
+    private Building selectedBuilding;
 
     public void OnSelectionChanged() {
         var selectables = SelectionManager.Instance.selectedObjects;
@@ -40,6 +46,8 @@ public class ObjectInfoOverlay : MonoBehaviour {
         this.personInfo.SetActive(this.selectedPerson);
         this.selectedSource = selectable.GetComponent<ResourceSource>();
         this.resourceInfo.SetActive(this.selectedSource);
+        this.selectedBuilding = selectable.GetComponent<Building>();
+        this.buildingInfo.SetActive(this.selectedBuilding);
     }
 
     private void LateUpdate() {
@@ -57,6 +65,25 @@ public class ObjectInfoOverlay : MonoBehaviour {
         if (this.selectedSource) {
             this.resourceInfoAmount.text = this.selectedSource.amount.ToString();
             this.resourceInfoIcon.sprite = ResourceManager.Instance.resourceSprites[(int) this.selectedSource.type];
+        }
+
+        if (this.selectedBuilding) {
+            this.requiredText.enabled = !this.selectedBuilding.IsFinished;
+            var required = this.selectedBuilding.requiredResources;
+            foreach (var info in this.buildingResourceInfos) {
+                if (this.selectedBuilding.IsFinished) {
+                    info.gameObject.SetActive(false);
+                    continue;
+                }
+
+                var req = required.Find(res => res.type == info.type);
+                if (req != null) {
+                    info.gameObject.SetActive(true);
+                    info.text.text = req.amount.ToString();
+                } else {
+                    info.gameObject.SetActive(false);
+                }
+            }
         }
     }
 

@@ -5,13 +5,14 @@ using UnityEngine;
 public class SpeedUpButton : MonoBehaviour {
 
     public float speedUpFactor;
+    private bool speedingUp;
 
     public void OnSelect() {
-        Time.timeScale *= this.speedUpFactor;
+        Time.timeScale = this.speedUpFactor;
     }
 
     public void OnDeselect() {
-        Time.timeScale /= this.speedUpFactor;
+        Time.timeScale = 1;
     }
 
 }
