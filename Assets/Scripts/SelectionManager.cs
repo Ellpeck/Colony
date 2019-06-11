@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class SelectionManager : MonoBehaviour {
@@ -13,7 +14,7 @@ public class SelectionManager : MonoBehaviour {
     public Color ghostColor;
     public Color invalidGhostColor;
     public Building placingBuilding;
-    public OnSelectionChanged onSelectionChanged;
+    public UnityEvent onSelectionChanged;
 
     private new Camera camera;
 
@@ -99,10 +100,6 @@ public class SelectionManager : MonoBehaviour {
             selectable.OnSelect();
         }
 
-        if (this.onSelectionChanged != null)
-            this.onSelectionChanged();
+        this.onSelectionChanged.Invoke();
     }
-
-    public delegate void OnSelectionChanged();
-
 }

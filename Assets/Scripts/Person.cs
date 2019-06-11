@@ -20,8 +20,6 @@ public class Person : MonoBehaviour {
 
     private void Start() {
         this.commandable = this.GetComponent<Commandable>();
-        this.commandable.onTargetReached += this.OnTargetReached;
-        this.commandable.onCommandReceived += this.OnCommandReceived;
     }
 
     private void Update() {
@@ -109,7 +107,7 @@ public class Person : MonoBehaviour {
         return Vector2.Distance(this.transform.position, position) <= this.maxTargetDistance;
     }
 
-    private void OnTargetReached(GameObject destination) {
+    public void OnTargetReached(GameObject destination) {
         if (destination == null || !this.IsInRange(destination.transform.position))
             return;
 
@@ -152,7 +150,7 @@ public class Person : MonoBehaviour {
         }
     }
 
-    private void OnCommandReceived(Vector2 destination, GameObject destinationObj, bool fromPlayer) {
+    public void OnCommandReceived(Vector2 destination, GameObject destinationObj, bool fromPlayer) {
         if (fromPlayer) {
             this.resourceToBeGathered = null;
             this.interactingSource = null;

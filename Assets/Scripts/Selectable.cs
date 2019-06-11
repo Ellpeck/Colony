@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Selectable : MonoBehaviour {
 
@@ -34,8 +36,7 @@ public class Selectable : MonoBehaviour {
             this.outline.color = this.selectedColor;
         }
         this.IsSelected = true;
-        if (this.onSelection != null)
-            this.onSelection(true);
+        this.onSelection.Invoke(true);
     }
 
     public void OnDeselect() {
@@ -43,10 +44,12 @@ public class Selectable : MonoBehaviour {
             this.outline.gameObject.SetActive(false);
         }
         this.IsSelected = false;
-        if (this.onSelection != null)
-            this.onSelection(false);
+        this.onSelection.Invoke(false);
     }
 
-    public delegate void OnSelection(bool select);
+    [Serializable]
+    public class OnSelection : UnityEvent<bool> {
+
+    }
 
 }

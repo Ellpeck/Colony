@@ -22,11 +22,7 @@ public class ObjectInfoOverlay : MonoBehaviour {
     private Person selectedPerson;
     private ResourceSource selectedSource;
 
-    private void Start() {
-        SelectionManager.Instance.onSelectionChanged += this.OnSelectionChanged;
-    }
-
-    private void OnSelectionChanged() {
+    public void OnSelectionChanged() {
         var selectables = SelectionManager.Instance.selectedObjects;
         Selectable selectable;
         if (selectables.Count <= 0 || !(selectable = selectables[selectables.Count - 1])) {

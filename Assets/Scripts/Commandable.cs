@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class Commandable : MonoBehaviour {
@@ -12,7 +14,6 @@ public class Commandable : MonoBehaviour {
     public float maxWaypointDistance;
     public GameObject waypointMarker;
     public int discoveryRadius;
-
     public OnTargetReached onTargetReached;
     public OnCommandReceived onCommandReceived;
 
@@ -31,7 +32,7 @@ public class Commandable : MonoBehaviour {
 
     private void Start() {
         this.selectable = this.GetComponent<Selectable>();
-        this.selectable.onSelection += this.OnSelection;
+        this.selectable.onSelection.AddListener(this.OnSelection);
         this.seeker = this.GetComponent<Seeker>();
         this.body = this.GetComponent<Rigidbody2D>();
         this.animator = this.GetComponentInChildren<Animator>();
@@ -81,8 +82,7 @@ public class Commandable : MonoBehaviour {
         this.currentWaypointMarker.SetActive(this.selectable.IsSelected);
 
         this.destination = destination;
-        if (this.onCommandReceived != null)
-            this.onCommandReceived(pos, destination, fromPlayer);
+        this.onCommandReceived.Invoke(pos, destination, fromPlayer);
     }
 
     private void FixedUpdate() {
@@ -98,8 +98,7 @@ public class Commandable : MonoBehaviour {
                         if (this.currentWaypointMarker)
                             Destroy(this.currentWaypointMarker);
                         this.currentPath = null;
-                        if (this.onTargetReached != null)
-                            this.onTargetReached(this.destination);
+                        this.onTargetReached.Invoke(this.destination);
                         return;
                     }
                 } else {
@@ -130,8 +129,14 @@ public class Commandable : MonoBehaviour {
         Gizmos.DrawWireSphere(this.transform.position, this.maxWaypointDistance);
     }
 
-    public delegate void OnTargetReached(GameObject destination);
+    [Serializable]
+    public class OnTargetReached : UnityEvent<GameObject> {
 
-    public delegate void OnCommandReceived(Vector2 destination, GameObject destinationObject, bool fromPlayer);
+    }
+
+    [Serializable]
+    public class OnCommandReceived : UnityEvent<Vector2, GameObject, bool> {
+
+    }
 
 }

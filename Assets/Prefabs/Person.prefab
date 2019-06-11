@@ -138,6 +138,38 @@ MonoBehaviour:
   waypointMarker: {fileID: 3832567475731754766, guid: adb0e56e4bbf42a49ae43fff397fb959,
     type: 3}
   discoveryRadius: 5
+  onTargetReached:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6970151867861238035}
+        m_MethodName: OnTargetReached
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Commandable+OnTargetReached, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onCommandReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6970151867861238035}
+        m_MethodName: OnCommandReceived
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Commandable+OnCommandReceived, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &6970151867861238035
 MonoBehaviour:
   m_ObjectHideFlags: 0
