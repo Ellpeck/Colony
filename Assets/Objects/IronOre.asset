@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32efd318d3fed704783f765a88af9c69, type: 3}
-  m_Name: Rocks
+  m_Name: IronOre
   m_EditorClassIdentifier: 
-  veinAmount: 25
-  veinSize: 2
-  amountPerVein: 8
-  objectToSpawn: {fileID: 8768801551195711336, guid: 877e3eca1bd952e4c901735557623e66,
+  veinAmount: 15
+  veinSize: 3
+  amountPerVein: 10
+  objectToSpawn: {fileID: 2205320120637234492, guid: b7c9ce3f1ce973647884abd060201847,
     type: 3}

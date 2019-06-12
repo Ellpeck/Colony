@@ -11,6 +11,9 @@ TextureImporter:
   - first:
       213: -7517111035151034562
     second: Nature_2
+  - first:
+      213: 8872184973925900774
+    second: Nature_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -157,7 +160,7 @@ TextureImporter:
         width: 38
         height: 30
       alignment: 9
-      pivot: {x: 0.5, y: 0.13991699}
+      pivot: {x: 0.5, y: 0.139917}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -165,6 +168,27 @@ TextureImporter:
       bones: []
       spriteID: 087222aaf98442f4294e084085980f26
       internalID: -7517111035151034562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nature_3
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 192
+        width: 38
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.139917}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02b28fe18428ca94ba6817908fa3ebc9
+      internalID: 8872184973925900774
       vertices: []
       indices: 
       edges: []

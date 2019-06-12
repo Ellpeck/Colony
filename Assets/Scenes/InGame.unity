@@ -5565,6 +5565,7 @@ MonoBehaviour:
   clutterGenerators:
   - {fileID: 11400000, guid: 7d709199a713e244987e3a0024df75c9, type: 2}
   - {fileID: 11400000, guid: f14af0354e656134c9dd9ca58384bded, type: 2}
+  - {fileID: 11400000, guid: db8d7aef968aed641967a708ad7ab3ca, type: 2}
 --- !u!1 &1925390322
 GameObject:
   m_ObjectHideFlags: 0

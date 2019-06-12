@@ -71,7 +71,7 @@ PrefabInstance:
     - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
         type: 3}
       propertyPath: requiredResources.Array.data[2].type
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3927899578790795717, guid: 56dc410a7c3d125409b7fa70de3f9d71,
         type: 3}
