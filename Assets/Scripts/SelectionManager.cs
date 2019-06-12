@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -26,7 +27,7 @@ public class SelectionManager : MonoBehaviour {
         this.camera = Camera.main;
     }
 
-    private void Update() {
+    private void LateUpdate() {
         var pos = Input.mousePosition;
         Vector2 worldPos = this.camera.ScreenToWorldPoint(pos);
         if (EventSystem.current.IsPointerOverGameObject() || !WorldGenerator.Instance.IsDiscovered(worldPos)) {
@@ -39,6 +40,12 @@ public class SelectionManager : MonoBehaviour {
         }
 
         if (this.placingBuilding) {
+            if (Input.GetMouseButtonDown(1)) {
+                Destroy(this.placingBuilding.gameObject);
+                this.placingBuilding = null;
+                return;
+            }
+
             var valid = this.placingBuilding.IsValidPosition();
             this.placingBuilding.SetGhostColor(valid ? this.ghostColor : this.invalidGhostColor);
             if (valid && Input.GetMouseButtonDown(0)) {
@@ -102,4 +109,5 @@ public class SelectionManager : MonoBehaviour {
 
         this.onSelectionChanged.Invoke();
     }
+
 }

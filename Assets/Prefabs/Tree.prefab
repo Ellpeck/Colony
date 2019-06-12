@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateOnDestroy: 1
+  boundExpand: 1
 --- !u!1 &8611685287279510262
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,11 +161,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 8802698752267877728}
-  selectedColor: {r: 1, g: 0.70388687, b: 0, a: 1}
-  hoverColor: {r: 1, g: 0.7019608, b: 0, a: 0.44705883}
+  selectedColor: {r: 0.4811321, g: 0.15159523, b: 0.029503396, a: 1}
+  hoverColor: {r: 0.48235297, g: 0.15294118, b: 0.03137255, a: 0.5019608}
   menuName: Tree
   menuSprite: {fileID: 2818415227679610127, guid: 0d00b2eb0c45a2741a7c52daa7ad3df4,
     type: 3}
+  onSelection:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Selectable+OnSelection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!70 &3518747099926375046
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

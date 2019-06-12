@@ -87,8 +87,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1561080742184872184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.316, z: 0}
-  m_LocalScale: {x: 2.8785, y: 2.8785, z: 2.8785}
+  m_LocalPosition: {x: 0, y: 0.094, z: 0}
+  m_LocalScale: {x: 1.238435, y: 1.238435, z: 1.238435}
   m_Children: []
   m_Father: {fileID: 2205320120637234434}
   m_RootOrder: 0
@@ -131,7 +131,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: -823361620510505896, guid: de3d2539d580a454aa11706caeefa957,
+  m_Sprite: {fileID: -3235147733989176768, guid: de3d2539d580a454aa11706caeefa957,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -242,8 +242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 1383013224112792234}
-  selectedColor: {r: 1, g: 0.70388687, b: 0, a: 1}
-  hoverColor: {r: 1, g: 0.7019608, b: 0, a: 0.44705883}
+  selectedColor: {r: 1, g: 0.39636746, b: 0, a: 1}
+  hoverColor: {r: 1, g: 0.39607847, b: 0, a: 0.5019608}
   menuName: Iron Ore
   menuSprite: {fileID: 8872184973925900774, guid: 0d00b2eb0c45a2741a7c52daa7ad3df4,
     type: 3}

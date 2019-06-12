@@ -98,11 +98,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 3093924807131150513}
-  selectedColor: {r: 1, g: 0.70388687, b: 0, a: 1}
-  hoverColor: {r: 1, g: 0.7019608, b: 0, a: 0.44705883}
+  selectedColor: {r: 1, g: 0, b: 0.009791374, a: 1}
+  hoverColor: {r: 1, g: 0, b: 0.007843138, a: 0.5019608}
   menuName: Berry Bush
   menuSprite: {fileID: 774397507195319065, guid: 0d00b2eb0c45a2741a7c52daa7ad3df4,
     type: 3}
+  onSelection:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Selectable+OnSelection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!70 &6923081561410465623
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -275,3 +280,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateOnDestroy: 1
+  boundExpand: 1
