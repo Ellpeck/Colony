@@ -150,6 +150,19 @@ public class WorldGenerator : MonoBehaviour {
         return !this.darkness.GetTile(local);
     }
 
+    public bool IsOutOfBounds(PolygonCollider2D collider) {
+        foreach (var point in collider.points) {
+            var local = this.ground.WorldToCell(collider.transform.position + (Vector3) point);
+            if (this.IsOutOfBounds(local))
+                return true;
+        }
+        return false;
+    }
+
+    private bool IsOutOfBounds(Vector3Int position) {
+        return position.x < 0 || position.y < 0 || position.x >= this.size || position.y >= this.size;
+    }
+
     public Person CreatePerson(Vector2 position) {
         var newPerson = Instantiate(this.person, position, Quaternion.identity, this.people);
         var selectable = newPerson.GetComponent<Selectable>();
