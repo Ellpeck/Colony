@@ -5562,11 +5562,9 @@ MonoBehaviour:
   person: {fileID: 6970151867861238035, guid: 6f09f14ee6e56cb44ac4e63e227b5f19, type: 3}
   townCenter: {fileID: 8551313883627600220, guid: 3e3fed3be26dcc048b87348d91693c6e,
     type: 3}
-  berryBushVeinAmount: 60
-  berryBushVeinSize: 5
-  berryBushAmountPerVein: 3
-  berryBush: {fileID: 2829520590252115751, guid: d1a2a2ea762f01e43a3626d619b8c502,
-    type: 3}
+  clutterGenerators:
+  - {fileID: 11400000, guid: 7d709199a713e244987e3a0024df75c9, type: 2}
+  - {fileID: 11400000, guid: f14af0354e656134c9dd9ca58384bded, type: 2}
 --- !u!1 &1925390322
 GameObject:
   m_ObjectHideFlags: 0

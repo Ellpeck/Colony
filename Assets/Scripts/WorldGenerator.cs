@@ -41,10 +41,7 @@ public class WorldGenerator : MonoBehaviour {
     public Person person;
     public Building townCenter;
 
-    [Space] public int berryBushVeinAmount;
-    public int berryBushVeinSize;
-    public int berryBushAmountPerVein;
-    public GameObject berryBush;
+    public ClutterGenerator[] clutterGenerators;
 
     private int seed;
     private string[] nameArray;
@@ -94,20 +91,8 @@ public class WorldGenerator : MonoBehaviour {
 
         yield return new WaitForEndOfFrame(); // tilemap collider updates in LateUpdate, so wait
 
-        for (var i = 0; i < this.berryBushVeinAmount; i++) {
-            var center = new Vector3Int(
-                Random.Range(this.berryBushVeinSize, this.size - this.berryBushVeinSize),
-                Random.Range(this.berryBushVeinSize, this.size - this.berryBushVeinSize), 0);
-            for (var j = 0; j < this.berryBushAmountPerVein; j++) {
-                var pos = center + new Vector3Int(
-                              Random.Range(-this.berryBushVeinSize, this.berryBushVeinSize),
-                              Random.Range(-this.berryBushVeinSize, this.berryBushVeinSize), 0);
-                var worldPos = this.ground.GetCellCenterWorld(pos);
-                if (!Physics2D.OverlapCircle(worldPos, 0.5F, this.objectCollisionLayers)) {
-                    Instantiate(this.berryBush, worldPos, Quaternion.identity, this.decorations);
-                }
-            }
-        }
+        foreach (var gen in this.clutterGenerators)
+            gen.Spawn(this);
 
         var townCenterInst = Instantiate(this.townCenter, this.decorations);
         for (var x = -this.townCenterSpawnRadius; x <= this.townCenterSpawnRadius; x++) {
@@ -138,14 +123,13 @@ public class WorldGenerator : MonoBehaviour {
 
         var worldCenter = this.ground.CellToWorld(new Vector3Int(this.size / 2, this.size / 2, 0));
         foreach (var graph in AstarPath.active.graphs) {
-            var grid = graph as GridGraph;
-            if (grid != null) {
+            if (graph is GridGraph grid) {
                 grid.center = worldCenter;
                 grid.SetDimensions(this.size, this.size, grid.nodeSize);
             }
         }
         AstarPath.active.Scan();
-        
+
         Physics2D.autoSyncTransforms = false;
     }
 
