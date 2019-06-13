@@ -6,10 +6,13 @@ using UnityEngine;
 public class TownCenter : MonoBehaviour {
 
     public float personCreationTime;
+    public int maxPersonQueue;
+    public Resource requiredResource;
     public Transform personSpawnPoint;
     public GameObject createPersonButton;
 
     public float CreatePersonTimer { get; private set; }
+    public float QueuedPersonAmount { get; private set; }
 
     private Building building;
 
@@ -23,8 +26,9 @@ public class TownCenter : MonoBehaviour {
     }
 
     public void CreatePerson() {
-        if (this.CreatePersonTimer <= 0) {
-            this.CreatePersonTimer = this.personCreationTime;
+        if (this.QueuedPersonAmount < this.maxPersonQueue && ResourceManager.Instance.HasResource(this.requiredResource)) {
+            ResourceManager.Instance.Take(this.requiredResource.type, this.requiredResource.amount);
+            this.QueuedPersonAmount++;
         }
     }
 
@@ -35,6 +39,9 @@ public class TownCenter : MonoBehaviour {
                 var gen = WorldGenerator.Instance;
                 Instantiate(gen.person, this.personSpawnPoint.position, Quaternion.identity, gen.people);
             }
+        } else if (this.QueuedPersonAmount > 0) {
+            this.CreatePersonTimer = this.personCreationTime;
+            this.QueuedPersonAmount--;
         }
     }
 

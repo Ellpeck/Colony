@@ -49,4 +49,8 @@ public class ResourceManager : MonoBehaviour {
         return 0;
     }
 
+    public bool HasResource(Resource resource) {
+        return this.GetResourceAmount(resource.type) >= resource.amount;
+    }
+
 }

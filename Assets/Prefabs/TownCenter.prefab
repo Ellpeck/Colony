@@ -43,6 +43,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   personCreationTime: 15
+  maxPersonQueue: 5
+  requiredResource:
+    type: 4
+    amount: 50
   personSpawnPoint: {fileID: 3175527870566596794}
   createPersonButton: {fileID: 1518178137347107189, guid: fb1cf786b7b7a9344aa2ba06d21b41b3,
     type: 3}
