@@ -12,6 +12,9 @@ public class ResourceManager : MonoBehaviour {
     public Resource gold;
     public Resource food;
 
+    public Building[] placeableBuildings;
+    public BuildInstruction buildInstruction;
+
     public Sprite[] resourceSprites;
 
     public Resource[] Resources { get; private set; }

@@ -5941,6 +5941,10 @@ MonoBehaviour:
   food:
     type: 4
     amount: 200
+  placeableBuildings:
+  - {fileID: 9030056952766014865, guid: 4c711cf2c28633947b24f294ba16f65b, type: 3}
+  buildInstruction: {fileID: 4606108351387766768, guid: 58b4e7de5caf76e4eac35e1264d56ae6,
+    type: 3}
   resourceSprites:
   - {fileID: -1557013538026691241, guid: c6a5ab7e128ed4e4b909082dc64b9fb1, type: 3}
   - {fileID: 82707731993968007, guid: c6a5ab7e128ed4e4b909082dc64b9fb1, type: 3}

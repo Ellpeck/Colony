@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InteractionMenu : MonoBehaviour {
 
@@ -12,16 +11,18 @@ public class InteractionMenu : MonoBehaviour {
         foreach (Transform child in this.panel.transform)
             Destroy(child.gameObject);
 
-        var items = new List<GameObject>();
-        foreach (var selectable in SelectionManager.Instance.selectedObjects)
+        var selectable = SelectionManager.Instance.GetLastSelected<Selectable>();
+        if (selectable) {
+            var items = new List<GameObject>();
             selectable.getInteractionItems.Invoke(items);
 
-        var any = false;
-        foreach (var interaction in items) {
-            interaction.transform.SetParent(this.panel.transform, false);
-            any = true;
+            foreach (var interaction in items) {
+                interaction.transform.SetParent(this.panel.transform, false);
+                this.panel.SetActive(true);
+            }
+        } else {
+            this.panel.SetActive(false);
         }
-        this.panel.SetActive(any);
     }
 
 }
