@@ -54,7 +54,7 @@ public class SelectionManager : MonoBehaviour {
                 this.placingBuilding.UpdateGraph();
                 foreach (var obj in this.selectedObjects) {
                     if (obj.canBuild)
-                        obj.GetComponent<Commandable>().MoveTo(this.placingBuilding.gameObject);
+                        obj.GetComponent<Commandable>().MoveTo(this.placingBuilding.gameObject, true);
                 }
                 this.placingBuilding = null;
             } else {
