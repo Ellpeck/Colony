@@ -144,47 +144,6 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: menuName
-      value: Town Center
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: menuSprite
-      value: 
-      objectReference: {fileID: -8078966772632430244, guid: fe2aa609d41969c459d79fe66364c118,
-        type: 3}
-    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: -5064980725603340331}
-    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GetInteractionItems
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
-        type: 3}
-      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 3927899578790795718, guid: 56dc410a7c3d125409b7fa70de3f9d71,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -193,7 +152,7 @@ PrefabInstance:
     - target: {fileID: 3927899578790795718, guid: 56dc410a7c3d125409b7fa70de3f9d71,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 22
+      value: 1.2475
       objectReference: {fileID: 0}
     - target: {fileID: 3927899578790795718, guid: 56dc410a7c3d125409b7fa70de3f9d71,
         type: 3}
@@ -239,6 +198,47 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: menuName
+      value: Town Center
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: menuSprite
+      value: 
+      objectReference: {fileID: -8078966772632430244, guid: fe2aa609d41969c459d79fe66364c118,
+        type: 3}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: -5064980725603340331}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GetInteractionItems
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3927899578582003231, guid: 56dc410a7c3d125409b7fa70de3f9d71,
         type: 3}

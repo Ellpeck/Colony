@@ -5943,6 +5943,7 @@ MonoBehaviour:
     amount: 200
   placeableBuildings:
   - {fileID: 9030056952766014865, guid: 4c711cf2c28633947b24f294ba16f65b, type: 3}
+  - {fileID: 7525752357147273111, guid: 2c50b91c836ac42459b4c742b4984396, type: 3}
   buildInstruction: {fileID: 4606108351387766768, guid: 58b4e7de5caf76e4eac35e1264d56ae6,
     type: 3}
   resourceSprites:
