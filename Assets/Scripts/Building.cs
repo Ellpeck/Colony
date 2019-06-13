@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class Building : MonoBehaviour {
 
-    public Type type;
     public List<Resource.Type> storeableTypes;
     public int discoveryRadius;
     public Sprite unfinishedSprite;
     public List<Resource> requiredResources;
+    public int villagerLimitIncrease;
     public SpriteRenderer mainRenderer;
 
     public bool IsGhost { get; private set; }
@@ -43,9 +43,16 @@ public class Building : MonoBehaviour {
         this.mainRenderer.sprite = finished ? this.finishedSprite : this.unfinishedSprite;
         if (!ghost) {
             this.SetGhostColor(Color.white);
-            if (finished)
+            if (finished) {
                 WorldGenerator.Instance.Discover(this.transform.position, this.discoveryRadius);
+                TownStats.Instance.villagerLimit += this.villagerLimitIncrease;
+            }
         }
+    }
+
+    private void OnDestroy() {
+        if (!this.IsGhost && this.IsFinished)
+            TownStats.Instance.villagerLimit -= this.villagerLimitIncrease;
     }
 
     public void SetGhostColor(Color color) {
@@ -93,11 +100,5 @@ public class Building : MonoBehaviour {
     }
 
     public delegate bool BuildingFilter(Building building);
-
-    public enum Type {
-
-        TownCenter
-
-    }
 
 }

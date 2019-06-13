@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Person : MonoBehaviour {
 
-    public float chopSpeed;
-    public float buildSpeed;
     public float maxTargetDistance;
     public int maxCarryAmount;
     public float maxNextSourceDistance;
@@ -48,13 +46,12 @@ public class Person : MonoBehaviour {
             } else if (this.IsInRange(this.interactingSource.gameObject)) {
                 // gather the resource
                 this.actionTimer += Time.deltaTime;
-                if (this.actionTimer >= this.chopSpeed) {
+                if (this.actionTimer >= TownStats.Instance.chopSpeed) {
                     this.actionTimer = 0;
                     if (!this.Carry(this.interactingSource.type, 1)) {
                         // carry items to a building because we are full
-                        Building.BuildingFilter filter = building =>
-                            building.storeableTypes.Contains(this.CarryingResource.type);
-                        var closest = Building.GetClosest(this.transform.position, filter);
+                        var closest = Building.GetClosest(this.transform.position, building =>
+                            building.storeableTypes.Contains(this.CarryingResource.type));
                         if (closest)
                             this.MoveTo(closest.gameObject);
                     } else {
@@ -74,7 +71,7 @@ public class Person : MonoBehaviour {
             // construct building if it is in range
             if (this.IsInRange(this.constructingBuilding.gameObject)) {
                 this.actionTimer += Time.deltaTime;
-                if (this.actionTimer >= this.buildSpeed) {
+                if (this.actionTimer >= TownStats.Instance.buildSpeed) {
                     this.actionTimer = 0;
                     // if the building can be fed the current resource
                     if (this.CarryingResource != null && this.constructingBuilding.FeedResource(this.CarryingResource.type)) {
@@ -82,7 +79,7 @@ public class Person : MonoBehaviour {
                         this.Deposit(1);
                     } else {
                         // otherwise, find a building that has the required resources
-                        Building.BuildingFilter filter = building => {
+                        bool Filter(Building building) {
                             foreach (var res in this.constructingBuilding.requiredResources) {
                                 if (!building.storeableTypes.Contains(res.type))
                                     continue;
@@ -90,8 +87,9 @@ public class Person : MonoBehaviour {
                                     return true;
                             }
                             return false;
-                        };
-                        var closest = Building.GetClosest(this.transform.position, filter);
+                        }
+
+                        var closest = Building.GetClosest(this.transform.position, Filter);
                         if (closest) {
                             this.MoveTo(closest.gameObject);
                             this.isWaitingForBuildingResources = false;

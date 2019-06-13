@@ -34,10 +34,12 @@ public class TownCenter : MonoBehaviour {
 
     private void Update() {
         if (this.CreatePersonTimer > 0) {
-            this.CreatePersonTimer -= Time.deltaTime;
-            if (this.CreatePersonTimer <= 0) {
-                var gen = WorldGenerator.Instance;
-                Instantiate(gen.person, this.personSpawnPoint.position, Quaternion.identity, gen.people);
+            if (TownStats.Instance.GetVillagerAmount() < TownStats.Instance.villagerLimit) {
+                this.CreatePersonTimer -= Time.deltaTime;
+                if (this.CreatePersonTimer <= 0) {
+                    var gen = WorldGenerator.Instance;
+                    Instantiate(gen.person, this.personSpawnPoint.position, Quaternion.identity, gen.people);
+                }
             }
         } else if (this.QueuedPersonAmount > 0) {
             this.CreatePersonTimer = this.personCreationTime;
