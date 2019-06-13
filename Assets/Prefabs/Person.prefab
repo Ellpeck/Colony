@@ -121,6 +121,28 @@ MonoBehaviour:
   menuName: Villager
   menuSprite: {fileID: -1644172504589110628, guid: fd338c36b70bcf94cb7cd02b14c871fb,
     type: 3}
+  canBuild: 1
+  onSelection:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Selectable+OnSelection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  getInteractionItems:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6970151867861238035}
+        m_MethodName: GetInteractionItems
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Selectable+GetInteractionItems, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &-3696622249838448240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +209,10 @@ MonoBehaviour:
   maxTargetDistance: 0.75
   maxCarryAmount: 10
   maxNextSourceDistance: 10
+  placeableBuildings:
+  - {fileID: 8551313883627600220, guid: 3e3fed3be26dcc048b87348d91693c6e, type: 3}
+  buildInstruction: {fileID: 4606108351387766768, guid: 58b4e7de5caf76e4eac35e1264d56ae6,
+    type: 3}
 --- !u!1 &3892446509568060692
 GameObject:
   m_ObjectHideFlags: 0

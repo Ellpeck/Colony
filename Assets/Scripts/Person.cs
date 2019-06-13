@@ -10,6 +10,8 @@ public class Person : MonoBehaviour {
     public float maxTargetDistance;
     public int maxCarryAmount;
     public float maxNextSourceDistance;
+    public Building[] placeableBuildings;
+    public BuildInstruction buildInstruction;
 
     public Resource CarryingResource { get; private set; }
     private Commandable commandable;
@@ -21,6 +23,14 @@ public class Person : MonoBehaviour {
 
     private void Start() {
         this.commandable = this.GetComponent<Commandable>();
+    }
+
+    public void GetInteractionItems(List<GameObject> items) {
+        foreach (var building in this.placeableBuildings) {
+            var inst = Instantiate(this.buildInstruction);
+            inst.buildingToPlace = building;
+            items.Add(inst.gameObject);
+        }
     }
 
     private void Update() {

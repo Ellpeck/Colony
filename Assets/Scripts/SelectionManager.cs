@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -52,9 +53,8 @@ public class SelectionManager : MonoBehaviour {
                 this.placingBuilding.SetMode(false, false);
                 this.placingBuilding.UpdateGraph();
                 foreach (var obj in this.selectedObjects) {
-                    var person = obj.GetComponent<Person>();
-                    if (person)
-                        person.MoveTo(this.placingBuilding.gameObject);
+                    if (obj.canBuild)
+                        obj.GetComponent<Commandable>().MoveTo(this.placingBuilding.gameObject);
                 }
                 this.placingBuilding = null;
             } else {
@@ -89,6 +89,23 @@ public class SelectionManager : MonoBehaviour {
                 this.hoveringObject = null;
             }
         }
+    }
+
+    public IEnumerable<T> GetAllSelected<T>() where T : MonoBehaviour {
+        foreach (var selected in this.selectedObjects) {
+            var comp = selected.GetComponent<T>();
+            if (comp)
+                yield return comp;
+        }
+    }
+
+    public T GetLastSelected<T>() where T : MonoBehaviour {
+        for (var i = this.selectedObjects.Count - 1; i >= 0; i--) {
+            var comp = this.selectedObjects[i].GetComponent<T>();
+            if (comp)
+                return comp;
+        }
+        return null;
     }
 
     public bool IsBusy() {

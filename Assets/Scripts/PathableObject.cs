@@ -7,10 +7,10 @@ public class PathableObject : MonoBehaviour {
     public bool updateOnDestroy;
     public float boundExpand = 1;
 
-    public PolygonCollider2D Collider { get; private set; }
+    public Collider2D Collider { get; private set; }
 
     private void Awake() {
-        this.Collider = this.GetComponent<PolygonCollider2D>();
+        this.Collider = this.GetComponent<Collider2D>();
     }
 
     public void UpdateGraph() {

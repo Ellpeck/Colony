@@ -9,11 +9,12 @@ public class Selectable : MonoBehaviour {
     public SpriteRenderer outline;
     public Color selectedColor;
     public Color hoverColor;
-
     public string menuName;
     public Sprite menuSprite;
+    public bool canBuild;
 
     public OnSelection onSelection;
+    public GetInteractionItems getInteractionItems;
 
     public bool IsSelected { get; private set; }
 
@@ -49,6 +50,11 @@ public class Selectable : MonoBehaviour {
 
     [Serializable]
     public class OnSelection : UnityEvent<bool> {
+
+    }
+
+    [Serializable]
+    public class GetInteractionItems : UnityEvent<List<GameObject>> {
 
     }
 

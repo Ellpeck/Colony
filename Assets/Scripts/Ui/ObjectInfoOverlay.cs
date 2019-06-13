@@ -29,9 +29,8 @@ public class ObjectInfoOverlay : MonoBehaviour {
     private Building selectedBuilding;
 
     public void OnSelectionChanged() {
-        var selectables = SelectionManager.Instance.selectedObjects;
-        Selectable selectable;
-        if (selectables.Count <= 0 || !(selectable = selectables[selectables.Count - 1])) {
+        var selectable = SelectionManager.Instance.GetLastSelected<Selectable>();
+        if (!selectable) {
             this.panel.SetActive(false);
             this.selectedPerson = null;
             this.selectedSource = null;

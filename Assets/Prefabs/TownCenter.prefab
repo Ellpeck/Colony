@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7279393499860393740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3175527870566596794}
+  m_Layer: 9
+  m_Name: PersonSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3175527870566596794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7279393499860393740}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.106, y: -1.171, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8551313883627600223}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5064980725603340331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8551313883627600221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92a9a492c6d117f438133e9ae83793db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  personCreationTime: 15
+  personSpawnPoint: {fileID: 3175527870566596794}
+  createPersonButton: {fileID: 1518178137347107189, guid: fb1cf786b7b7a9344aa2ba06d21b41b3,
+    type: 3}
 --- !u!1001 &4624894935857258649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -91,6 +137,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
         type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
       propertyPath: menuName
       value: Town Center
       objectReference: {fileID: 0}
@@ -100,6 +151,31 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -8078966772632430244, guid: fe2aa609d41969c459d79fe66364c118,
         type: 3}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: -5064980725603340331}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GetInteractionItems
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927899578790795719, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+        type: 3}
+      propertyPath: getInteractionItems.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3927899578790795718, guid: 56dc410a7c3d125409b7fa70de3f9d71,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -268,3 +344,15 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3927899578582003224, guid: 56dc410a7c3d125409b7fa70de3f9d71, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 56dc410a7c3d125409b7fa70de3f9d71, type: 3}
+--- !u!1 &8551313883627600221 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3927899578790795716, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+    type: 3}
+  m_PrefabInstance: {fileID: 4624894935857258649}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8551313883627600223 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3927899578790795718, guid: 56dc410a7c3d125409b7fa70de3f9d71,
+    type: 3}
+  m_PrefabInstance: {fileID: 4624894935857258649}
+  m_PrefabAsset: {fileID: 0}

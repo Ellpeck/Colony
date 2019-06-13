@@ -27,9 +27,9 @@ public class Building : MonoBehaviour {
     }
 
     public bool IsValidPosition() {
-        if (WorldGenerator.Instance.IsOutOfBounds(this.pathableObject.Collider))
+        if (WorldGenerator.Instance.IsOutOfBounds((PolygonCollider2D) this.pathableObject.Collider))
             return false;
-        
+
         var filter = new ContactFilter2D();
         filter.useTriggers = true;
         filter.SetLayerMask(WorldGenerator.Instance.objectCollisionLayers);
