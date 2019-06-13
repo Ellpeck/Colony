@@ -204,13 +204,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d593d64f46ce747ba502e9c8c96964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chopSpeed: 1
-  buildSpeed: 0.5
   maxTargetDistance: 0.75
   maxCarryAmount: 10
   maxNextSourceDistance: 10
   placeableBuildings:
   - {fileID: 8551313883627600220, guid: 3e3fed3be26dcc048b87348d91693c6e, type: 3}
+  - {fileID: 9030056952766014865, guid: 4c711cf2c28633947b24f294ba16f65b, type: 3}
   buildInstruction: {fileID: 4606108351387766768, guid: 58b4e7de5caf76e4eac35e1264d56ae6,
     type: 3}
 --- !u!1 &3892446509568060692
