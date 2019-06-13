@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class TownCenter : MonoBehaviour {
@@ -20,6 +21,7 @@ public class TownCenter : MonoBehaviour {
         this.building = this.GetComponent<Building>();
     }
 
+    [UsedImplicitly]
     public void GetInteractionItems(List<GameObject> items) {
         if (this.building.IsFinished)
             items.Add(Instantiate(this.createPersonButton));
@@ -38,7 +40,7 @@ public class TownCenter : MonoBehaviour {
                 this.CreatePersonTimer -= Time.deltaTime;
                 if (this.CreatePersonTimer <= 0) {
                     var gen = WorldGenerator.Instance;
-                    Instantiate(gen.person, this.personSpawnPoint.position, Quaternion.identity, gen.people);
+                    gen.CreatePerson(this.personSpawnPoint.position);
                 }
             }
         } else if (this.QueuedPersonAmount > 0) {
