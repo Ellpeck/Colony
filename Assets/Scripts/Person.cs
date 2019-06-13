@@ -36,7 +36,7 @@ public class Person : MonoBehaviour {
         if (this.resourceToBeGathered != null) {
             if (!this.interactingSource) {
                 // if the resource we are gathering has depleted, find a new resource close by
-                var next = ResourceSource.GetClosest(this.transform.position, this.resourceToBeGathered.Value, this.maxNextSourceDistance);
+                var next = ResourceSource.GetClosest(this.transform.position, this.maxNextSourceDistance, this.resourceToBeGathered.Value);
                 if (next) {
                     this.MoveTo(next.gameObject);
                 } else {
@@ -64,11 +64,22 @@ public class Person : MonoBehaviour {
         } else if (this.constructingBuilding) {
             // if the building we're constructing is finished, then our work is done
             if (this.constructingBuilding.IsFinished) {
+                if (this.constructingBuilding.storeableTypes.Length > 0) {
+                    // if there's anything to gather after building, do it
+                    var next = ResourceSource.GetClosest(this.transform.position, this.maxNextSourceDistance, this.constructingBuilding.storeableTypes);
+                    if (next)
+                        this.MoveTo(next.gameObject);
+                } else {
+                    // otherwise find the next building to work on
+                    var next = Building.GetClosest(this.transform.position, null, false, this.maxNextSourceDistance);
+                    if (next) {
+                        this.MoveTo(next.gameObject);
+                    }
+                }
                 this.constructingBuilding = null;
-                return;
             }
             // construct building if it is in range
-            if (this.IsInRange(this.constructingBuilding.gameObject)) {
+            else if (this.IsInRange(this.constructingBuilding.gameObject)) {
                 this.actionTimer += Time.deltaTime;
                 if (this.actionTimer >= TownStats.Instance.buildSpeed) {
                     this.actionTimer = 0;

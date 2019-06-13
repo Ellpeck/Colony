@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Building : MonoBehaviour {
 
-    public List<Resource.Type> storeableTypes;
+    public Resource.Type[] storeableTypes;
     public int discoveryRadius;
     public Sprite unfinishedSprite;
     public List<Resource> requiredResources;
@@ -82,16 +82,16 @@ public class Building : MonoBehaviour {
         return rightOne;
     }
 
-    public static Building GetClosest(Vector3 position, BuildingFilter filter = null) {
+    public static Building GetClosest(Vector3 position, BuildingFilter filter = null, bool finished = true, float maxDistance = 0) {
         Building closest = null;
         var closestDistance = float.MaxValue;
         foreach (var building in FindObjectsOfType<Building>()) {
-            if (building.IsGhost || !building.IsFinished)
+            if (building.IsGhost || finished != building.IsFinished)
                 continue;
             if (filter != null && !filter(building))
                 continue;
             var dist = (position - building.transform.position).sqrMagnitude;
-            if (dist < closestDistance) {
+            if (dist < closestDistance && (maxDistance == 0 || dist < maxDistance * maxDistance)) {
                 closestDistance = dist;
                 closest = building;
             }
