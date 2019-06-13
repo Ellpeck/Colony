@@ -19,11 +19,13 @@ public class Building : MonoBehaviour {
     private SpriteRenderer[] renderers;
     private PathableObject pathableObject;
     private Sprite finishedSprite;
+    public Selectable Selectable { get; private set; }
 
     private void Awake() {
         this.renderers = this.GetComponentsInChildren<SpriteRenderer>();
         this.finishedSprite = this.mainRenderer.sprite;
         this.pathableObject = this.GetComponentInChildren<PathableObject>();
+        this.Selectable = this.GetComponent<Selectable>();
     }
 
     public bool IsValidPosition() {

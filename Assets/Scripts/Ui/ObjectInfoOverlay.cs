@@ -15,6 +15,7 @@ public class ObjectInfoOverlay : MonoBehaviour {
     public GameObject personInfoNothing;
     public TextMeshProUGUI personInfoAmount;
     public Image personInfoIcon;
+    public TextMeshProUGUI personInfoActivity;
 
     [Space] public GameObject resourceInfo;
     public TextMeshProUGUI resourceInfoAmount;
@@ -47,6 +48,8 @@ public class ObjectInfoOverlay : MonoBehaviour {
         this.resourceInfo.SetActive(this.selectedSource);
         this.selectedBuilding = selectable.GetComponent<Building>();
         this.buildingInfo.SetActive(this.selectedBuilding);
+        
+        this.LateUpdate();
     }
 
     private void LateUpdate() {
@@ -59,6 +62,7 @@ public class ObjectInfoOverlay : MonoBehaviour {
                 this.personInfoAmount.text = this.selectedPerson.CarryingResource.amount.ToString();
                 this.personInfoIcon.sprite = ResourceManager.Instance.resourceSprites[(int) this.selectedPerson.CarryingResource.type];
             }
+            this.personInfoActivity.text = this.selectedPerson.GetActivity();
         }
 
         if (this.selectedSource) {

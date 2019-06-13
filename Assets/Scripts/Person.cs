@@ -114,6 +114,17 @@ public class Person : MonoBehaviour {
         }
     }
 
+    public string GetActivity() {
+        if (this.resourceToBeGathered != null)
+            return "Gathering " + this.resourceToBeGathered;
+        if (this.constructingBuilding) {
+            if (this.isWaitingForBuildingResources)
+                return "Waiting for resources";
+            return "Constructing " + this.constructingBuilding.Selectable.menuName;
+        }
+        return this.commandable.IsBusy() ? "On their way" : "Doing nothing";
+    }
+
     public void MoveTo(GameObject destination) {
         this.commandable.MoveTo(destination);
     }
