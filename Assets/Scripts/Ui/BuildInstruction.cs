@@ -24,31 +24,28 @@ public class BuildInstruction : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [UsedImplicitly]
     public void OnClick() {
         var inst = Instantiate(this.buildingToPlace, WorldGenerator.Instance.decorations);
-        inst.SetMode(true, true);
-        SelectionManager.Instance.placingBuilding = inst;
+        SelectionManager.Instance.SetPlacingBuilding(inst);
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        if (!this.tooltipInstance) {
-            this.tooltipInstance = Instantiate(this.tooltip, this.canvas.transform);
-            this.tooltipInstance.icon.sprite = this.selectable.menuSprite;
-            this.tooltipInstance.displayName.text = this.selectable.menuName;
-            this.tooltipInstance.description.text = this.buildingToPlace.description;
-            foreach (var requirement in this.tooltipInstance.requirements) {
-                var req = this.buildingToPlace.requiredResources.Find(res => res.type == requirement.type);
-                if (req != null) {
-                    requirement.text.text = req.amount.ToString();
-                    requirement.gameObject.SetActive(true);
-                } else {
-                    requirement.gameObject.SetActive(false);
-                }
+        this.tooltipInstance = Instantiate(this.tooltip, this.canvas.transform);
+        this.tooltipInstance.icon.sprite = this.selectable.menuSprite;
+        this.tooltipInstance.displayName.text = this.selectable.menuName;
+        this.tooltipInstance.description.text = this.buildingToPlace.description;
+        foreach (var requirement in this.tooltipInstance.requirements) {
+            var req = this.buildingToPlace.requiredResources.Find(res => res.type == requirement.type);
+            if (req != null) {
+                requirement.text.text = req.amount.ToString();
+                requirement.gameObject.SetActive(true);
+            } else {
+                requirement.gameObject.SetActive(false);
             }
         }
     }
 
     public void OnPointerExit(PointerEventData eventData) {
         if (this.tooltipInstance)
-            Destroy(this.tooltipInstance.gameObject);
+            this.tooltipInstance.FadeOut();
     }
 
 }

@@ -1629,6 +1629,8 @@ GameObject:
   - component: {fileID: 6151798489788650997}
   - component: {fileID: 6151798489788650998}
   - component: {fileID: 8985480699547149447}
+  - component: {fileID: 7353164061012780873}
+  - component: {fileID: 3574477782331543263}
   m_Layer: 5
   m_Name: CreationTooltip
   m_TagString: Untagged
@@ -1719,6 +1721,37 @@ MonoBehaviour:
   - {fileID: 4480756847364909907}
   - {fileID: 3961545001421885459}
   - {fileID: 2815037517639628493}
+--- !u!225 &7353164061012780873
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6151798489788651001}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!95 &3574477782331543263
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6151798489788651001}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 49972fc5989a634459d18c641bfe991d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6183290326736227647
 GameObject:
   m_ObjectHideFlags: 0

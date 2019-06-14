@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -28,17 +29,23 @@ public class ObjectInfoOverlay : MonoBehaviour {
     private Person selectedPerson;
     private ResourceSource selectedSource;
     private Building selectedBuilding;
+    private Animator panelAnimator;
+
+    private void Start() {
+        this.panelAnimator = this.panel.GetComponent<Animator>();
+    }
 
     public void OnSelectionChanged() {
         var selectable = SelectionManager.Instance.GetLastSelected<Selectable>();
         if (!selectable) {
-            this.panel.SetActive(false);
+            this.panelAnimator.SetBool("Out", true);
+
             this.selectedPerson = null;
             this.selectedSource = null;
             return;
         }
+        this.panelAnimator.SetBool("Out", false);
 
-        this.panel.SetActive(true);
         this.nameText.text = selectable.menuName;
         this.icon.sprite = selectable.menuSprite;
 
@@ -48,7 +55,7 @@ public class ObjectInfoOverlay : MonoBehaviour {
         this.resourceInfo.SetActive(this.selectedSource);
         this.selectedBuilding = selectable.GetComponent<Building>();
         this.buildingInfo.SetActive(this.selectedBuilding);
-        
+
         this.LateUpdate();
     }
 

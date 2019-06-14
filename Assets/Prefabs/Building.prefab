@@ -157,6 +157,7 @@ MonoBehaviour:
   unfinishedSprite: {fileID: 0}
   requiredResources: []
   villagerLimitIncrease: 0
+  description: 
   mainRenderer: {fileID: 3927899579386390284}
 --- !u!61 &3927899578790795712
 BoxCollider2D:
@@ -275,6 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3927899579386390275}
   - component: {fileID: 3927899579386390284}
+  - component: {fileID: 324603210286903720}
   m_Layer: 0
   m_Name: Gfx
   m_TagString: Untagged
@@ -345,3 +347,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!95 &324603210286903720
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3927899579386390274}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a867e6b7a6fd118498bf9873d66bc72b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

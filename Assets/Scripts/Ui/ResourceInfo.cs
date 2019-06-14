@@ -47,17 +47,15 @@ public class ResourceInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        if (!this.tooltipInstance) {
-            this.tooltipInstance = Instantiate(this.tooltip, this.canvas.transform);
-            this.tooltipInstance.displayName.text = this.type.ToString();
-            this.tooltipInstance.description.text = this.description;
-            this.tooltipInstance.icon.sprite = ResourceManager.Instance.resourceSprites[(int) this.type];
-        }
+        this.tooltipInstance = Instantiate(this.tooltip, this.canvas.transform);
+        this.tooltipInstance.displayName.text = this.type.ToString();
+        this.tooltipInstance.description.text = this.description;
+        this.tooltipInstance.icon.sprite = ResourceManager.Instance.resourceSprites[(int) this.type];
     }
 
     public void OnPointerExit(PointerEventData eventData) {
         if (this.tooltipInstance)
-            Destroy(this.tooltipInstance.gameObject);
+            this.tooltipInstance.FadeOut();
     }
 
 }

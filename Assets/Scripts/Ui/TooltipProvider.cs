@@ -7,8 +7,7 @@ using UnityEngine.EventSystems;
 public class TooltipProvider : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
     public TextTooltip tooltip;
-    [TextArea]
-    public string text;
+    [TextArea] public string text;
 
     private Canvas canvas;
     private TextTooltip instance;
@@ -18,15 +17,13 @@ public class TooltipProvider : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        if (!this.instance) {
-            this.instance = Instantiate(this.tooltip, this.canvas.transform);
-            this.instance.SetText(this.text);
-        }
+        this.instance = Instantiate(this.tooltip, this.canvas.transform);
+        this.instance.SetText(this.text);
     }
 
     public void OnPointerExit(PointerEventData eventData) {
         if (this.instance)
-            Destroy(this.instance.gameObject);
+            this.instance.FadeOut();
     }
 
 }

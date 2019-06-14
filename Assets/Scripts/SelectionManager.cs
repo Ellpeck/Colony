@@ -13,8 +13,6 @@ public class SelectionManager : MonoBehaviour {
     public LayerMask objectLayers;
     public List<Selectable> selectedObjects;
     public Selectable hoveringObject;
-    public Color ghostColor;
-    public Color invalidGhostColor;
     public Building placingBuilding;
     public UnityEvent onSelectionChanged;
 
@@ -31,13 +29,12 @@ public class SelectionManager : MonoBehaviour {
     private void LateUpdate() {
         var pos = Input.mousePosition;
         Vector2 worldPos = this.camera.ScreenToWorldPoint(pos);
-        if (EventSystem.current.IsPointerOverGameObject() || !WorldGenerator.Instance.IsDiscovered(worldPos)) {
+        var pointerBlocked = EventSystem.current.IsPointerOverGameObject();
+        var canInteract = !pointerBlocked && WorldGenerator.Instance.IsDiscovered(worldPos);
+        if (!canInteract) {
             if (this.hoveringObject)
                 this.hoveringObject.OnStopHover();
             this.hoveringObject = null;
-            if (this.placingBuilding)
-                this.placingBuilding.SetGhostColor(new Color(0, 0, 0, 0));
-            return;
         }
 
         if (this.placingBuilding) {
@@ -46,9 +43,10 @@ public class SelectionManager : MonoBehaviour {
                 this.placingBuilding = null;
                 return;
             }
+            this.placingBuilding.SetHidden(pointerBlocked);
 
-            var valid = this.placingBuilding.IsValidPosition();
-            this.placingBuilding.SetGhostColor(valid ? this.ghostColor : this.invalidGhostColor);
+            var valid = canInteract && this.placingBuilding.IsValidPosition();
+            this.placingBuilding.SetCanBuild(valid);
             if (valid && Input.GetMouseButtonDown(0)) {
                 this.placingBuilding.SetMode(false, false);
                 this.placingBuilding.UpdateGraph();
@@ -65,30 +63,40 @@ public class SelectionManager : MonoBehaviour {
             return;
         }
 
-        if (this.selectedObjects.Count > 0 && Input.GetMouseButtonDown(0) && !Input.GetKey(KeyCode.LeftControl)) {
-            this.Select(null, true);
-        }
+        if (canInteract) {
+            var left = Input.GetMouseButtonDown(0);
+            var control = Input.GetKey(KeyCode.LeftControl);
 
-        var ray = this.camera.ScreenPointToRay(pos);
-        var trace = Physics2D.GetRayIntersection(ray, Mathf.Infinity, this.objectLayers);
-        if (trace) {
-            var selectable = trace.transform.gameObject.GetComponent<Selectable>();
-            if (selectable != this.hoveringObject) {
-                if (this.hoveringObject)
+            var ray = this.camera.ScreenPointToRay(pos);
+            var trace = Physics2D.GetRayIntersection(ray, Mathf.Infinity, this.objectLayers);
+            if (trace) {
+                var selectable = trace.transform.gameObject.GetComponent<Selectable>();
+                if (selectable != this.hoveringObject) {
+                    if (this.hoveringObject)
+                        this.hoveringObject.OnStopHover();
+                    this.hoveringObject = selectable;
+                    this.hoveringObject.OnHover();
+                }
+
+                if (left)
+                    this.Select(selectable, !control); 
+            } else {
+                if (this.hoveringObject) {
                     this.hoveringObject.OnStopHover();
-                this.hoveringObject = selectable;
-                this.hoveringObject.OnHover();
-            }
+                    this.hoveringObject = null;
+                }
 
-            if (Input.GetMouseButtonDown(0)) {
-                this.Select(selectable, false);
-            }
-        } else {
-            if (this.hoveringObject) {
-                this.hoveringObject.OnStopHover();
-                this.hoveringObject = null;
+                if (left && !control)
+                    this.Select(null, true);
             }
         }
+    }
+
+    public void SetPlacingBuilding(Building building) {
+        if (this.placingBuilding)
+            Destroy(this.placingBuilding.gameObject);
+        this.placingBuilding = building;
+        building.SetMode(true, true);
     }
 
     public IEnumerable<T> GetAllSelected<T>() where T : MonoBehaviour {
