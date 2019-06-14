@@ -23,7 +23,7 @@ public class ObjectInfoOverlay : MonoBehaviour {
 
     [Space] public GameObject buildingInfo;
     public TextMeshProUGUI requiredText;
-    public ResourceInfo[] buildingResourceInfos;
+    public ConstructionRequirement[] buildingResourceInfos;
 
     private Person selectedPerson;
     private ResourceSource selectedSource;
