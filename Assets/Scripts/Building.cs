@@ -11,6 +11,7 @@ public class Building : MonoBehaviour {
     public Sprite unfinishedSprite;
     public List<Resource> requiredResources;
     public int villagerLimitIncrease;
+    [TextArea] public string description;
     public SpriteRenderer mainRenderer;
 
     public bool IsGhost { get; private set; }

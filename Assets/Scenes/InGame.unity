@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 68296383}
   - component: {fileID: 68296382}
   - component: {fileID: 68296385}
+  - component: {fileID: 68296386}
   m_Layer: 5
   m_Name: FreePerson
   m_TagString: Untagged
@@ -266,6 +267,21 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, Unity.ugui, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &68296386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68296380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f00f6e75e6945468bd24c83aaf8371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltip: {fileID: -7847538018139243463, guid: 47acbae448a87cf4b98be6e505aa42a2,
+    type: 3}
+  text: Press this button to find the next person that isn't currently doing an activity
 --- !u!1 &90966551
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +296,7 @@ GameObject:
   - component: {fileID: 90966555}
   - component: {fileID: 90966554}
   - component: {fileID: 90966553}
+  - component: {fileID: 90966558}
   m_Layer: 5
   m_Name: SpeedUp
   m_TagString: Untagged
@@ -450,6 +467,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90966551}
   m_CullTransparentMesh: 0
+--- !u!114 &90966558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90966551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f00f6e75e6945468bd24c83aaf8371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltip: {fileID: -7847538018139243463, guid: 47acbae448a87cf4b98be6e505aa42a2,
+    type: 3}
+  text: Hold down this button to speed up time
 --- !u!1 &121687998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,6 +2438,9 @@ GameObject:
   m_Component:
   - component: {fileID: 468588672}
   - component: {fileID: 468588673}
+  - component: {fileID: 468588675}
+  - component: {fileID: 468588674}
+  - component: {fileID: 468588676}
   m_Layer: 5
   m_Name: People
   m_TagString: Untagged
@@ -2447,6 +2482,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1817671804}
+--- !u!114 &468588674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468588671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, Unity.ugui,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &468588675
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468588671}
+  m_CullTransparentMesh: 0
+--- !u!114 &468588676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468588671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f00f6e75e6945468bd24c83aaf8371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltip: {fileID: -7847538018139243463, guid: 47acbae448a87cf4b98be6e505aa42a2,
+    type: 3}
+  text: The amount of people currently in the village. To increase the maximum amount,
+    build Hovels or other living quarters.
 --- !u!1 &478502561
 GameObject:
   m_ObjectHideFlags: 0

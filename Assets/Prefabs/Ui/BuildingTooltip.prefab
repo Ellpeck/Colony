@@ -588,8 +588,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 194.6, y: -113.74002}
-  m_SizeDelta: {x: 376.1, y: 110.3}
+  m_AnchoredPosition: {x: 197.56, y: -113.74002}
+  m_SizeDelta: {x: 381.97, y: 110.31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4884320648674714421
 CanvasRenderer:
@@ -725,7 +725,7 @@ GameObject:
   - component: {fileID: 6151798489788650998}
   - component: {fileID: 94805069619375998}
   m_Layer: 5
-  m_Name: ResourceTooltip
+  m_Name: BuildingTooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -777,7 +777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 0.8745098}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

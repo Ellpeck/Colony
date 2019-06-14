@@ -34,7 +34,6 @@ public class ResourceInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             this.accumLastMinute = this.accumCounter;
             this.accumCounter = 0;
             this.minuteCounter = 0;
-            Debug.Log("Last time for " + this.type + ": " + this.accumLastMinute);
         }
 
         if (currAmount != this.lastAmount) {

@@ -148,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 4606108352681966223}
   buildingToPlace: {fileID: 0}
+  tooltip: {fileID: 8985480699547149447, guid: d080a517699bb204e842826348cd57a0, type: 3}
 --- !u!1 &4606108352681966221
 GameObject:
   m_ObjectHideFlags: 0
