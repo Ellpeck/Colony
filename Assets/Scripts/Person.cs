@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Person : MonoBehaviour {
 
+    public string savedPrefabName;
     public float maxTargetDistance;
     public int maxCarryAmount;
     public float maxNextSourceDistance;
@@ -14,10 +16,11 @@ public class Person : MonoBehaviour {
     private ResourceSource interactingSource;
     private Resource.Type? resourceToBeGathered;
     private Building constructingBuilding;
+    private bool shouldContructBuilding;
     private bool isWaitingForBuildingResources;
     private float actionTimer;
 
-    private void Start() {
+    private void Awake() {
         this.commandable = this.GetComponent<Commandable>();
     }
 
@@ -61,19 +64,22 @@ public class Person : MonoBehaviour {
             } else {
                 this.MoveTo(this.interactingSource.gameObject);
             }
-        } else if (this.constructingBuilding) {
+        } else if (this.shouldContructBuilding) {
             // if the building we're constructing is finished, then our work is done
-            if (this.constructingBuilding.IsFinished) {
-                if (this.constructingBuilding.storeableTypes.Length > 0) {
+            if (!this.constructingBuilding || this.constructingBuilding.IsFinished) {
+                if (this.constructingBuilding && this.constructingBuilding.storeableTypes.Length > 0) {
                     // if there's anything to gather after building, do it
                     var next = ResourceSource.GetClosest(this.transform.position, this.maxNextSourceDistance, this.constructingBuilding.storeableTypes);
                     if (next)
                         this.MoveTo(next.gameObject);
+                    this.shouldContructBuilding = false;
                 } else {
                     // otherwise find the next building to work on
                     var next = Building.GetClosest(this.transform.position, null, false, this.maxNextSourceDistance);
                     if (next) {
                         this.MoveTo(next.gameObject);
+                    } else {
+                        this.shouldContructBuilding = false;
                     }
                 }
                 this.constructingBuilding = null;
@@ -132,7 +138,7 @@ public class Person : MonoBehaviour {
     public bool IsBusy() {
         return this.commandable.IsBusy()
                || this.resourceToBeGathered != null
-               || this.constructingBuilding != null && !this.isWaitingForBuildingResources;
+               || this.shouldContructBuilding && !this.isWaitingForBuildingResources;
     }
 
     private bool IsInRange(GameObject destination) {
@@ -176,6 +182,7 @@ public class Person : MonoBehaviour {
                     }
                 }
             } else {
+                this.shouldContructBuilding = true;
                 this.constructingBuilding = building;
             }
             return;
@@ -193,6 +200,7 @@ public class Person : MonoBehaviour {
         if (fromPlayer) {
             this.resourceToBeGathered = null;
             this.interactingSource = null;
+            this.shouldContructBuilding = false;
             this.constructingBuilding = null;
         }
     }
@@ -224,6 +232,32 @@ public class Person : MonoBehaviour {
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(this.transform.position, this.maxTargetDistance);
+    }
+
+    [Serializable]
+    public class Data {
+
+        public string prefabName;
+        public SerializableVec3 position;
+        public Resource carryingResource;
+        public Resource.Type? resourceToBeGathered;
+        public bool shouldConstructBuilding;
+
+        public Data(Person person) {
+            this.prefabName = person.savedPrefabName;
+            this.position = person.transform.position;
+            this.carryingResource = person.CarryingResource;
+            this.resourceToBeGathered = person.resourceToBeGathered;
+            this.shouldConstructBuilding = person.shouldContructBuilding;
+        }
+
+        public void Load(Person person) {
+            person.transform.position = this.position;
+            person.CarryingResource = this.carryingResource;
+            person.resourceToBeGathered = this.resourceToBeGathered;
+            person.shouldContructBuilding = this.shouldConstructBuilding;
+        }
+
     }
 
 }

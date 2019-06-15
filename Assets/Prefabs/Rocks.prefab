@@ -247,11 +247,17 @@ MonoBehaviour:
   menuName: Rocks
   menuSprite: {fileID: -7517111035151034562, guid: 0d00b2eb0c45a2741a7c52daa7ad3df4,
     type: 3}
+  canBuild: 0
   onSelection:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: Selectable+OnSelection, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  getInteractionItems:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Selectable+GetInteractionItems, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!70 &4532531564254777112
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -280,5 +286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0270b4cb5fb1441ea1fd97d8e97954d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  savedPrefabName: Rocks
   type: 1
   amount: 2000

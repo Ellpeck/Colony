@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,6 +55,24 @@ public class ResourceManager : MonoBehaviour {
 
     public bool HasResource(Resource resource) {
         return this.GetResourceAmount(resource.type) >= resource.amount;
+    }
+
+    [Serializable]
+    public class Data {
+
+        public int[] resources;
+
+        public Data(ResourceManager manager) {
+            this.resources = new int[manager.Resources.Length];
+            for (var i = 0; i < this.resources.Length; i++)
+                this.resources[i] = manager.GetResourceAmount((Resource.Type) i);
+        }
+
+        public void Load(ResourceManager manager) {
+            for (var i = 0; i < this.resources.Length; i++)
+                manager.Resources[i].amount = this.resources[i];
+        }
+
     }
 
 }

@@ -94,18 +94,20 @@ public class Commandable : MonoBehaviour {
 
     private void FixedUpdate() {
         if (this.currentPath != null) {
+            var path = this.currentPath.vectorPath;
+            if (path.Count <= 0) {
+                this.OnGoalReached();
+                return;
+            }
+
             Vector2 waypoint;
             while (true) {
-                var path = this.currentPath.vectorPath;
                 waypoint = path[this.currentWaypoint];
                 var dist = Vector2.Distance(this.body.position, waypoint);
                 if (dist <= this.maxWaypointDistance) {
                     this.currentWaypoint++;
                     if (this.currentWaypoint >= path.Count) {
-                        if (this.currentWaypointMarker)
-                            Destroy(this.currentWaypointMarker);
-                        this.currentPath = null;
-                        this.onTargetReached.Invoke(this.destination);
+                        this.OnGoalReached();
                         return;
                     }
                 } else {
@@ -124,6 +126,13 @@ public class Commandable : MonoBehaviour {
             this.body.velocity = Vector2.zero;
             this.animator.SetBool(Walking, false);
         }
+    }
+
+    private void OnGoalReached() {
+        if (this.currentWaypointMarker)
+            Destroy(this.currentWaypointMarker);
+        this.currentPath = null;
+        this.onTargetReached.Invoke(this.destination);
     }
 
     private void OnPathCalculated(Path path) {

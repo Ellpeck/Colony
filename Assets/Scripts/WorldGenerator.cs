@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class WorldGenerator : MonoBehaviour {
 
@@ -44,41 +46,50 @@ public class WorldGenerator : MonoBehaviour {
 
     public ClutterGenerator[] clutterGenerators;
 
-    private int seed;
+    public int Seed { get; private set; }
     private string[] nameArray;
 
-    private void Start() {
+    private void Awake() {
         Instance = this;
-        this.seed = Random.Range(0, 100000);
-        this.nameArray = this.names.text.Split('\n');
-
-        this.StartCoroutine(this.GenerateMap());
     }
 
-    private IEnumerator GenerateMap() {
-        Physics2D.autoSyncTransforms = true;
-        Random.InitState(this.seed);
+    private void Start() {
+        this.nameArray = this.names.text.Split('\n');
+    }
 
-        for (var x = -this.darknessBorder; x < this.size + this.darknessBorder; x++) {
-            for (var y = -this.darknessBorder; y < this.size + this.darknessBorder; y++) {
-                this.darkness.SetTile(new Vector3Int(x, y, 0), this.darknessTile);
+    public void Generate(int seed, bool loading, DarknessData darknessData) {
+        this.Seed = seed;
+        this.StartCoroutine(this.GenerateMap(loading, darknessData));
+    }
+
+    private IEnumerator GenerateMap(bool loading, DarknessData darknessData) {
+        Physics2D.autoSyncTransforms = true;
+        Random.InitState(this.Seed);
+
+        if (darknessData == null) {
+            for (var x = -this.darknessBorder; x < this.size + this.darknessBorder; x++) {
+                for (var y = -this.darknessBorder; y < this.size + this.darknessBorder; y++) {
+                    this.darkness.SetTile(new Vector3Int(x, y, 0), this.darknessTile);
+                }
             }
+        } else {
+            darknessData.Load(this.size, this.darknessBorder, this.darkness, this.darknessTile);
         }
 
         for (var x = 0; x < this.size; x++) {
             for (var y = 0; y < this.size; y++) {
-                var noise = (Mathf.PerlinNoise(this.seed + x / this.perlinScale1, this.seed + y / this.perlinScale1) +
-                             Mathf.PerlinNoise(this.seed + x / this.perlinScale2, this.seed + y / this.perlinScale2) * 3F) / 4F;
+                var noise = (Mathf.PerlinNoise(this.Seed + x / this.perlinScale1, this.Seed + y / this.perlinScale1) +
+                             Mathf.PerlinNoise(this.Seed + x / this.perlinScale2, this.Seed + y / this.perlinScale2) * 3F) / 4F;
                 Tile tile;
                 if (noise <= this.waterHeight)
                     tile = this.water;
                 else if (noise <= this.sandHeight)
                     tile = this.sand;
                 else {
-                    var treeNoise = (Mathf.PerlinNoise(this.seed + x / this.treePerlinScale1, this.seed + y / this.treePerlinScale1) +
-                                     Mathf.PerlinNoise(this.seed + x / this.treePerlinScale2, this.seed + y / this.treePerlinScale2) * 2F) / 3F;
+                    var treeNoise = (Mathf.PerlinNoise(this.Seed + x / this.treePerlinScale1, this.Seed + y / this.treePerlinScale1) +
+                                     Mathf.PerlinNoise(this.Seed + x / this.treePerlinScale2, this.Seed + y / this.treePerlinScale2) * 2F) / 3F;
                     if (treeNoise <= this.treeHeight) {
-                        if (Random.Range(0, this.treeDensity) == 0) {
+                        if (!loading && Random.Range(0, this.treeDensity) == 0) {
                             var treePos = this.ground.GetCellCenterWorld(new Vector3Int(x, y, 0));
                             Instantiate(this.tree, treePos, Quaternion.identity, this.resources);
                         }
@@ -92,33 +103,35 @@ public class WorldGenerator : MonoBehaviour {
 
         yield return new WaitForEndOfFrame(); // tilemap collider updates in LateUpdate, so wait
 
-        foreach (var gen in this.clutterGenerators)
-            gen.Spawn(this);
+        if (!loading) {
+            foreach (var gen in this.clutterGenerators)
+                gen.Spawn(this);
 
-        var townCenterInst = Instantiate(this.townCenter, this.buildings);
-        for (var x = -this.townCenterSpawnRadius; x <= this.townCenterSpawnRadius; x++) {
-            for (var y = -this.townCenterSpawnRadius; y <= this.townCenterSpawnRadius; y++) {
-                var pos = this.ground.GetCellCenterWorld(new Vector3Int(this.size / 2 + x, this.size / 2 + y, 0));
-                townCenterInst.transform.position = pos;
-                if (townCenterInst.IsValidPosition()) {
-                    townCenterInst.SetMode(false, true);
-                    CameraController.Instance.CenterCameraOn(pos);
-                    goto townCenterSpawned;
+            var townCenterInst = Instantiate(this.townCenter, this.buildings);
+            for (var x = -this.townCenterSpawnRadius; x <= this.townCenterSpawnRadius; x++) {
+                for (var y = -this.townCenterSpawnRadius; y <= this.townCenterSpawnRadius; y++) {
+                    var pos = this.ground.GetCellCenterWorld(new Vector3Int(this.size / 2 + x, this.size / 2 + y, 0));
+                    townCenterInst.transform.position = pos;
+                    if (townCenterInst.IsValidPosition()) {
+                        townCenterInst.SetMode(false, true);
+                        CameraController.Instance.CenterCameraOn(pos);
+                        goto townCenterSpawned;
+                    }
                 }
             }
-        }
-        townCenterSpawned:
+            townCenterSpawned:
 
-        var peopleSpawned = 0;
-        for (var i = 0; i < this.personSpawnTries; i++) {
-            var randomPos = townCenterInst.transform.position + new Vector3(
-                                Random.Range(-this.personSpawnRadius, this.personSpawnRadius),
-                                Random.Range(-this.personSpawnRadius, this.personSpawnRadius));
-            if (!Physics2D.OverlapCircle(randomPos, 0.5F, this.objectCollisionLayers)) {
-                this.CreatePerson(randomPos);
-                peopleSpawned++;
-                if (peopleSpawned >= this.personCount)
-                    break;
+            var peopleSpawned = 0;
+            for (var i = 0; i < this.personSpawnTries; i++) {
+                var randomPos = townCenterInst.transform.position + new Vector3(
+                                    Random.Range(-this.personSpawnRadius, this.personSpawnRadius),
+                                    Random.Range(-this.personSpawnRadius, this.personSpawnRadius));
+                if (!Physics2D.OverlapCircle(randomPos, 0.5F, this.objectCollisionLayers)) {
+                    this.CreatePerson(randomPos);
+                    peopleSpawned++;
+                    if (peopleSpawned >= this.personCount)
+                        break;
+                }
             }
         }
 
@@ -164,11 +177,10 @@ public class WorldGenerator : MonoBehaviour {
         return position.x < 0 || position.y < 0 || position.x >= this.size || position.y >= this.size;
     }
 
-    public Person CreatePerson(Vector2 position) {
+    public void CreatePerson(Vector2 position) {
         var newPerson = Instantiate(this.person, position, Quaternion.identity, this.people);
         var selectable = newPerson.GetComponent<Selectable>();
         selectable.menuName = this.nameArray[Random.Range(0, this.nameArray.Length)];
-        return newPerson;
     }
 
 }

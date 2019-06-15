@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class ResourceSource : MonoBehaviour {
 
+    public string savedPrefabName;
     public Resource.Type type;
     public int amount;
 
@@ -28,5 +30,27 @@ public class ResourceSource : MonoBehaviour {
         if (this.amount <= 0)
             Destroy(this.gameObject);
     }
+    
+    [Serializable]
+    public class Data {
 
+        public string prefabName;
+        public SerializableVec3 position;
+        public int type;
+        public int amount;
+
+        public Data(ResourceSource source) {
+            this.prefabName = source.savedPrefabName;
+            this.position = source.transform.position;
+            this.type = (int) source.type;
+            this.amount = source.amount;
+        }
+
+        public void Load(ResourceSource source) {
+            source.transform.position = this.position;
+            source.type = (Resource.Type) this.type;
+            source.amount = this.amount;
+        }
+
+    }
 }

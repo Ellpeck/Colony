@@ -10,6 +10,7 @@ public class Building : MonoBehaviour {
     private static readonly int CanBuild = Animator.StringToHash("CanBuild");
     private static readonly int Hidden = Animator.StringToHash("Hidden");
 
+    public string savedPrefabName;
     public Resource.Type[] storeableTypes;
     public int discoveryRadius;
     public Sprite unfinishedSprite;
@@ -109,5 +110,32 @@ public class Building : MonoBehaviour {
     }
 
     public delegate bool BuildingFilter(Building building);
+
+    [Serializable]
+    public class Data {
+
+        public string prefabName;
+        public SerializableVec3 position;
+        public bool isFinished;
+        public List<Resource> requiredResources;
+
+        private Data(Building building) {
+            this.prefabName = building.savedPrefabName;
+            this.position = building.transform.position;
+            this.isFinished = building.IsFinished;
+            this.requiredResources = building.requiredResources;
+        }
+
+        public void Load(Building building) {
+            building.requiredResources = this.requiredResources;
+            building.transform.position = this.position;
+            building.SetMode(false, this.isFinished);
+        }
+
+        public static Data Save(Building building) {
+            return building.IsGhost ? null : new Data(building);
+        }
+
+    }
 
 }

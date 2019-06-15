@@ -204,6 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d593d64f46ce747ba502e9c8c96964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  savedPrefabName: Person
   maxTargetDistance: 0.75
   maxCarryAmount: 10
   maxNextSourceDistance: 10

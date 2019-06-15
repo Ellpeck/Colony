@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour {
     private new Camera camera;
     private Vector3 lastMousePos;
 
-    private void Start() {
+    private void Awake() {
         Instance = this;
         this.camera = this.GetComponent<Camera>();
     }
@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour {
 
         var horizontal = Input.GetAxisRaw("Horizontal");
         var vertical = Input.GetAxisRaw("Vertical");
-        this.camera.transform.position += new Vector3(horizontal, vertical) * this.keyMoveSpeed * this.camera.orthographicSize;
+        this.camera.transform.position += this.keyMoveSpeed * this.camera.orthographicSize * new Vector3(horizontal, vertical);
     }
 
 }
