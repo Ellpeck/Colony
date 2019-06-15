@@ -23,7 +23,7 @@ public class BuildInstruction : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     [UsedImplicitly]
     public void OnClick() {
-        var inst = Instantiate(this.buildingToPlace, WorldGenerator.Instance.decorations);
+        var inst = Instantiate(this.buildingToPlace, WorldGenerator.Instance.buildings);
         SelectionManager.Instance.SetPlacingBuilding(inst);
     }
 

@@ -21,7 +21,7 @@ public class ClutterGenerator : ScriptableObject {
                               Random.Range(-this.veinSize, this.veinSize), 0);
                 var worldPos = generator.ground.GetCellCenterWorld(pos);
                 if (!Physics2D.OverlapCircle(worldPos, 0.5F, generator.objectCollisionLayers)) {
-                    Instantiate(this.objectToSpawn, worldPos, Quaternion.identity, generator.decorations);
+                    Instantiate(this.objectToSpawn, worldPos, Quaternion.identity, generator.resources);
                 }
             }
         }

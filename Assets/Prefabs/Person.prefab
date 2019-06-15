@@ -207,11 +207,6 @@ MonoBehaviour:
   maxTargetDistance: 0.75
   maxCarryAmount: 10
   maxNextSourceDistance: 10
-  placeableBuildings:
-  - {fileID: 8551313883627600220, guid: 3e3fed3be26dcc048b87348d91693c6e, type: 3}
-  - {fileID: 9030056952766014865, guid: 4c711cf2c28633947b24f294ba16f65b, type: 3}
-  buildInstruction: {fileID: 4606108351387766768, guid: 58b4e7de5caf76e4eac35e1264d56ae6,
-    type: 3}
 --- !u!1 &3892446509568060692
 GameObject:
   m_ObjectHideFlags: 0

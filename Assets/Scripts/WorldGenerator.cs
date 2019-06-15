@@ -11,7 +11,8 @@ public class WorldGenerator : MonoBehaviour {
     public int size;
     public Tilemap ground;
     public Tilemap darkness;
-    public Transform decorations;
+    public Transform resources;
+    public Transform buildings;
     public Transform people;
     public TextAsset names;
 
@@ -79,7 +80,7 @@ public class WorldGenerator : MonoBehaviour {
                     if (treeNoise <= this.treeHeight) {
                         if (Random.Range(0, this.treeDensity) == 0) {
                             var treePos = this.ground.GetCellCenterWorld(new Vector3Int(x, y, 0));
-                            Instantiate(this.tree, treePos, Quaternion.identity, this.decorations);
+                            Instantiate(this.tree, treePos, Quaternion.identity, this.resources);
                         }
                         tile = this.darkGrass;
                     } else
@@ -94,7 +95,7 @@ public class WorldGenerator : MonoBehaviour {
         foreach (var gen in this.clutterGenerators)
             gen.Spawn(this);
 
-        var townCenterInst = Instantiate(this.townCenter, this.decorations);
+        var townCenterInst = Instantiate(this.townCenter, this.buildings);
         for (var x = -this.townCenterSpawnRadius; x <= this.townCenterSpawnRadius; x++) {
             for (var y = -this.townCenterSpawnRadius; y <= this.townCenterSpawnRadius; y++) {
                 var pos = this.ground.GetCellCenterWorld(new Vector3Int(this.size / 2 + x, this.size / 2 + y, 0));
