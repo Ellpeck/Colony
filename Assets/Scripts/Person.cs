@@ -238,6 +238,7 @@ public class Person : MonoBehaviour {
     public class Data {
 
         public string prefabName;
+        public string displayName;
         public SerializableVec3 position;
         public Resource carryingResource;
         public Resource.Type? resourceToBeGathered;
@@ -245,6 +246,7 @@ public class Person : MonoBehaviour {
 
         public Data(Person person) {
             this.prefabName = person.savedPrefabName;
+            this.displayName = person.GetComponent<Selectable>().menuName;
             this.position = person.transform.position;
             this.carryingResource = person.CarryingResource;
             this.resourceToBeGathered = person.resourceToBeGathered;
@@ -252,6 +254,7 @@ public class Person : MonoBehaviour {
         }
 
         public void Load(Person person) {
+            person.GetComponent<Selectable>().menuName = this.displayName;
             person.transform.position = this.position;
             person.CarryingResource = this.carryingResource;
             person.resourceToBeGathered = this.resourceToBeGathered;
