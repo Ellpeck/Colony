@@ -1,39 +1,60 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class SaveManager : MonoBehaviour {
 
-    public static SaveManager Instance;
+    private static readonly BinaryFormatter Formatter = new BinaryFormatter();
 
-    public string saveName;
     public Transform resources;
     public Transform buildings;
     public Transform people;
     public GameObject[] prefabs;
+    public float saveInterval;
 
-    private BinaryFormatter formatter;
+    private Guid saveId;
+    private string saveName;
+    private float saveTimer;
 
-    private void Awake() {
-        Instance = this;
-        this.formatter = new BinaryFormatter();
+    private void Start() {
+        var active = ActiveGameHandler.Instance;
+        this.saveId = active.saveId;
+        this.saveName = active.saveName;
+        
+        var worldGen = WorldGenerator.Instance;
+        if (active.savedSummary.hasData) {
+            this.Load();
+            worldGen.Generate(active.savedSummary.seed, true);
+        } else {
+            worldGen.GenerateDarkness(null);
+            worldGen.Generate(Random.Range(0, 100000), false);
+        }
     }
 
-    public void Save(WorldGenerator generator) {
-        var data = new SaveData(CameraController.Instance.transform.position, WorldGenerator.Instance.Seed);
-        this.Save("Summary", data);
+    private void Update() {
+        this.saveTimer += Time.unscaledDeltaTime;
+        if (this.saveTimer >= this.saveInterval) {
+            this.saveTimer = 0;
+            this.Save();
+            Debug.Log("Saved game");
+        }
+    }
+
+    private void Save() {
+        var generator = WorldGenerator.Instance;
+        var summary = new SaveData(this.saveName, DateTime.Now, generator.Seed);
+        Save(this.saveId, "Summary", summary);
 
         var darknessData = new DarknessData(generator.size, generator.darknessBorder, generator.darkness);
-        this.Save("Darkness", darknessData);
+        Save(this.saveId, "Darkness", darknessData);
 
         var resourceData = new List<ResourceSource.Data>();
         foreach (var res in this.resources.GetComponentsInChildren<ResourceSource>())
             resourceData.Add(new ResourceSource.Data(res));
-        this.Save("Resources", resourceData);
+        Save(this.saveId, "Resources", resourceData);
 
         var buildingData = new List<Building.Data>();
         foreach (var building in this.buildings.GetComponentsInChildren<Building>()) {
@@ -41,47 +62,45 @@ public class SaveManager : MonoBehaviour {
             if (dat != null)
                 buildingData.Add(dat);
         }
-        this.Save("Buildings", buildingData);
+        Save(this.saveId, "Buildings", buildingData);
 
         var personData = new List<Person.Data>();
         foreach (var person in this.people.GetComponentsInChildren<Person>())
             personData.Add(new Person.Data(person));
-        this.Save("People", personData);
+        Save(this.saveId, "People", personData);
 
         var resourceManagerData = new ResourceManager.Data(ResourceManager.Instance);
-        this.Save("ResourceManager", resourceManagerData);
+        Save(this.saveId, "ResourceManager", resourceManagerData);
     }
 
-    public (SaveData summary, DarknessData darkness) Load() {
-        var summary = this.Load<SaveData>("Summary");
-        if (summary == null)
-            return (null, null);
-        CameraController.Instance.transform.position = summary.cameraPosition;
-
-        var darknessData = this.Load<DarknessData>("Darkness");
-
-        var resourceData = this.Load<List<ResourceSource.Data>>("Resources");
+    private void Load() {
+        var resourceData = Load<List<ResourceSource.Data>>(this.saveId, "Resources");
         foreach (var res in resourceData) {
             var inst = this.InstantiatePrefab<ResourceSource>(res.prefabName, this.resources);
             res.Load(inst);
         }
 
-        var buildingData = this.Load<List<Building.Data>>("Buildings");
+        var buildingData = Load<List<Building.Data>>(this.saveId, "Buildings");
         foreach (var building in buildingData) {
             var inst = this.InstantiatePrefab<Building>(building.prefabName, this.buildings);
             building.Load(inst);
         }
 
-        var personData = this.Load<List<Person.Data>>("People");
+        var personData = Load<List<Person.Data>>(this.saveId, "People");
         foreach (var person in personData) {
             var inst = this.InstantiatePrefab<Person>(person.prefabName, this.people);
             person.Load(inst);
         }
 
-        var resourceManagerData = this.Load<ResourceManager.Data>("ResourceManager");
+        var resourceManagerData = Load<ResourceManager.Data>(this.saveId, "ResourceManager");
         resourceManagerData.Load(ResourceManager.Instance);
 
-        return (summary, darknessData);
+        var darknessData = Load<DarknessData>(this.saveId, "Darkness");
+        WorldGenerator.Instance.GenerateDarkness(darknessData);
+    }
+
+    public static SaveData LoadSummary(Guid saveId) {
+        return Load<SaveData>(saveId, "Summary");
     }
 
     private T InstantiatePrefab<T>(string name, Transform parent) {
@@ -90,34 +109,37 @@ public class SaveManager : MonoBehaviour {
         return inst.GetComponent<T>();
     }
 
-    private void Save(string fileName, object data) {
-        var file = this.GetPath(fileName);
+    private static void Save(Guid saveId, string fileName, object data) {
+        var file = GetPath(saveId, fileName);
         if (file.Directory != null && !file.Directory.Exists)
             file.Directory.Create();
         if (file.Exists)
             file.Delete();
 
         using (var stream = file.OpenWrite()) {
-            this.formatter.Serialize(stream, data);
+            Formatter.Serialize(stream, data);
         }
     }
 
-    private T Load<T>(string fileName) {
-        var file = this.GetPath(fileName);
+    private static T Load<T>(Guid saveId, string fileName) {
+        var file = GetPath(saveId, fileName);
         if (file.Directory == null || !file.Directory.Exists)
             return default;
         if (!file.Exists)
             return default;
 
         using (var stream = file.OpenRead()) {
-            var data = this.formatter.Deserialize(stream);
+            var data = Formatter.Deserialize(stream);
             return (T) data;
         }
     }
 
-    private FileInfo GetPath(string fileName) {
-        var path = Path.Combine(Application.persistentDataPath, "Saves", this.saveName, fileName);
-        return new FileInfo(path);
+    private static FileInfo GetPath(Guid saveId, string fileName) {
+        return new FileInfo(Path.Combine(GetSaveFolder(), saveId.ToString(), fileName));
+    }
+
+    public static string GetSaveFolder() {
+        return Path.Combine(Application.persistentDataPath, "Saves");
     }
 
 }

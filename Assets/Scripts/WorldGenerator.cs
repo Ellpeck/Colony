@@ -57,24 +57,26 @@ public class WorldGenerator : MonoBehaviour {
         this.nameArray = this.names.text.Split('\n');
     }
 
-    public void Generate(int seed, bool loading, DarknessData darknessData) {
+    public void Generate(int seed, bool loading) {
         this.Seed = seed;
-        this.StartCoroutine(this.GenerateMap(loading, darknessData));
+        this.StartCoroutine(this.GenerateMap(loading));
     }
 
-    private IEnumerator GenerateMap(bool loading, DarknessData darknessData) {
-        Physics2D.autoSyncTransforms = true;
-        Random.InitState(this.Seed);
-
-        if (darknessData == null) {
+    public void GenerateDarkness(DarknessData data) {
+        if (data == null) {
             for (var x = -this.darknessBorder; x < this.size + this.darknessBorder; x++) {
                 for (var y = -this.darknessBorder; y < this.size + this.darknessBorder; y++) {
                     this.darkness.SetTile(new Vector3Int(x, y, 0), this.darknessTile);
                 }
             }
         } else {
-            darknessData.Load(this.size, this.darknessBorder, this.darkness, this.darknessTile);
+            data.Load(this.size, this.darknessBorder, this.darkness, this.darknessTile);
         }
+    }
+
+    private IEnumerator GenerateMap(bool loading) {
+        Physics2D.autoSyncTransforms = true;
+        Random.InitState(this.Seed);
 
         for (var x = 0; x < this.size; x++) {
             for (var y = 0; y < this.size; y++) {

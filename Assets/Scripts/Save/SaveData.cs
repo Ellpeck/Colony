@@ -6,11 +6,15 @@ using UnityEngine;
 [Serializable]
 public class SaveData {
 
-    public SerializableVec3 cameraPosition;
+    public bool hasData;
+    public DateTime lastPlayed;
+    public string saveName;
     public int seed;
 
-    public SaveData(SerializableVec3 cameraPosition, int seed) {
-        this.cameraPosition = cameraPosition;
+    public SaveData(string saveName, DateTime lastPlayed, int seed) {
+        this.hasData = true;
+        this.saveName = saveName;
+        this.lastPlayed = lastPlayed;
         this.seed = seed;
     }
 
