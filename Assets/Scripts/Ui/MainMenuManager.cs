@@ -45,17 +45,18 @@ public class MainMenuManager : MonoBehaviour {
     public void OnNewGameSubmit() {
         if (this.newGameName.text.Length <= 0)
             return;
-        var handler = ActiveGameHandler.Instance;
-        handler.saveName = this.newGameName.text;
-        handler.saveId = Guid.NewGuid();
+        var data = GameStartData.Create();
+        data.saveId = Guid.NewGuid();
+        data.saveName = this.newGameName.text;
         this.LoadInGame();
     }
 
     public void OnLoadGameSubmit(Guid saveId, SaveData summary) {
-        var handler = ActiveGameHandler.Instance;
-        handler.saveName = summary.saveName;
-        handler.saveId = saveId;
-        handler.savedSummary = summary;
+        var data = GameStartData.Create();
+        data.saveId = saveId;
+        data.saveName = summary.saveName;
+        data.seed = summary.seed;
+        data.isLoadedGame = true;
         this.LoadInGame();
     }
 

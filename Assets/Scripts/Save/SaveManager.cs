@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.Analytics;
 using Random = UnityEngine.Random;
 
 public class SaveManager : MonoBehaviour {
@@ -20,18 +21,27 @@ public class SaveManager : MonoBehaviour {
     private float saveTimer;
 
     private void Start() {
-        var active = ActiveGameHandler.Instance;
-        this.saveId = active.saveId;
-        this.saveName = active.saveName;
-        
         var worldGen = WorldGenerator.Instance;
-        if (active.savedSummary.hasData) {
-            this.Load();
-            worldGen.Generate(active.savedSummary.seed, true);
+
+        var data = FindObjectOfType<GameStartData>();
+        if (data) {
+            Destroy(data.gameObject);
+            
+            this.saveId = data.saveId;
+            this.saveName = data.saveName;
+
+            if (data.isLoadedGame) {
+                this.Load();
+                worldGen.Generate(data.seed, true);
+                return;
+            }
         } else {
-            worldGen.GenerateDarkness(null);
-            worldGen.Generate(Random.Range(0, 100000), false);
+            this.saveId = Guid.Empty;
+            this.saveName = "Editor";
         }
+
+        worldGen.GenerateDarkness(null);
+        worldGen.Generate(Random.Range(0, 100000), false);
     }
 
     private void Update() {
